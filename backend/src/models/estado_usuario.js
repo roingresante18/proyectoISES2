@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../database/database");
 
 
-
+//estado usuario
 const estadoUser = sequelize.define(
   "estado_usuarios",
   {
