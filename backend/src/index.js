@@ -3,10 +3,10 @@ const app = require("./app.js");
 const User = require("./models/usuarios.model");
 const tipoUser = require("./models/tipo_usuario");
 const estadoUser = require("./models/estado_usuario");
+const config = require("./config/config");
 
 
-
-const port = process.env.PORT || 3000;
+const port = config.port ;
 
 
 
