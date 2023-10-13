@@ -83,16 +83,16 @@ const Registrar = () => {
   return (
     <>
      <Navegador/>
-    <Typography variant="h4" component="h4" color="blue" align="center" padding={"40px"} marginTop={10}>
-        Formulario de registro usuario
-      </Typography>
-      <Box component="form" onSubmit={formik.handleSubmit}>
+        <Typography variant="h4" component="h4" color="blue" align="center" padding={"10px"} marginTop={10}>
+          Formulario de registro usuario
+        </Typography>
+      <Box sx={{ width:800, minWidth:400 , display:'flex', flexDirection:"column", alignContent:"center" }} component="form" onSubmit={formik.handleSubmit}>
         <Grid
           container
           direction="column"
           justifyContent="center"
           alignItems="center"
-          sx={{ mt: 3 }}
+         
         >
           <Grid
             container
@@ -107,7 +107,7 @@ const Registrar = () => {
               type="text"
               label="Nombre"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3,mx:1 }}
               name="nombre"
               onChange={formik.handleChange}
             />
@@ -116,7 +116,7 @@ const Registrar = () => {
               type="text"
               label="Apellido"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="apellido"
               onChange={formik.handleChange}
             />
@@ -124,7 +124,7 @@ const Registrar = () => {
               type="text"
               label="Clave"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="clave"
               onChange={formik.handleChange}
             />
@@ -133,7 +133,7 @@ const Registrar = () => {
               type="number"
               label="DNI"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="dni"
               onChange={formik.handleChange}
             />
@@ -142,7 +142,7 @@ const Registrar = () => {
               type="text"
               label="Nacionalidad"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="nacionalidad"
               onChange={formik.handleChange}
             />
@@ -151,7 +151,7 @@ const Registrar = () => {
               type="text"
               label="Direccion"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="direccion"
               onChange={formik.handleChange}
             />
@@ -159,7 +159,7 @@ const Registrar = () => {
               type="email"
               label="email"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="correo1"
               onChange={formik.handleChange}
             />
@@ -167,7 +167,7 @@ const Registrar = () => {
               type="email"
               label="email2"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="correo2"
               onChange={formik.handleChange}
             />
@@ -176,7 +176,7 @@ const Registrar = () => {
               type="number"
               label="Telefono"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="telefono1"
               onChange={formik.handleChange}
             />
@@ -184,7 +184,7 @@ const Registrar = () => {
               type="number"
               label="Telefono2"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="telefono1"
               onChange={formik.handleChange}
             />
@@ -192,7 +192,7 @@ const Registrar = () => {
               type="date"
               label="Fecha Nacimiento"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="fecha_nacimiento"
               onChange={formik.handleChange}
             />
@@ -201,7 +201,7 @@ const Registrar = () => {
               select
               label="Seleccione Tipo de Usuario"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{ width: 300, mt: 3, mx:1 }}
               name="id_tipo_usuario"
               onChange={formik.handleChange}
             >
@@ -236,7 +236,7 @@ const Registrar = () => {
           alignItems="center"
           sx={{ mt: 3 }}
         >
-            <Button variant="contained" type="submit" sx={{ width: 300, mt: 3 }} disabled={!formik.isValid}>
+            <Button variant="contained" type="submit" sx={{ width: 300, mt: 3, mx:1 }} disabled={!formik.isValid}>
               Enviar Formulario
             </Button>
          
@@ -260,7 +260,7 @@ const Registrar = () => {
             type="submit"
             edge="start"
             aria-label="menu"
-            sx={{ width: 300, mt: 6 }}
+            sx={{ width: 300, mt: 3 }}
           >
             Ver todos los usuarios
           </IconButton>

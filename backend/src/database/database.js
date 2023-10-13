@@ -1,11 +1,12 @@
+require("dotenv").config();
 const { Sequelize } = require('sequelize');
-const  { config } = require('../config/config');
-// const setupModels = require('../../app/models');
-
+const config = require('../config/config');
+// const setupModels = require('../../app/models')
 const sequelize = new Sequelize(
-  config.dbName, // name database
+  
+  config.dbNAME, // name database
   config.dbUser, // user database
-  config.dbPassword, // password database
+  config.dbPassword , // password database
     {
       host: config.dbHost,
       dialect: 'mysql' 
@@ -13,9 +14,12 @@ const sequelize = new Sequelize(
 );
 
 try {
+  console.log("Sincronizando sequelize");
   sequelize.sync({ force: false });
   
-} catch (error) {}
+} catch (error) {
+console.error('error al conectar a la base de datos',error);
+}
 // sequelize.sync();
 // setupModels(sequelize);
 

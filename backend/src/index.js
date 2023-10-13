@@ -12,8 +12,8 @@ const port = process.env.PORT || 3000;
 
 async function main() {
   try {
-    await sequelize.authenticate();
-    require("./database/relaciones"); // si quitamos esta linea las relaciones no se crean automaticamente
+    // await sequelize.authenticate();
+    // require("./database/relaciones"); // si quitamos esta linea las relaciones no se crean automaticamente
     console.log("Authenticated successfully");
     console.log(User === sequelize.models.usuarios); // vemos si nuestro modelo coincide con el de la base de datos
     console.log(tipoUser === sequelize.models.tipo_usuario);
