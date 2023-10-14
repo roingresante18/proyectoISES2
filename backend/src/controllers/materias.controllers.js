@@ -39,6 +39,16 @@ const update = async (req, res) => {
         res.status(500).send({ success: false, message: error.message });
     }
 }
+const alta_baja = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const body = req.body;
+        const response = await service.update(id,body);
+        res.json(response);
+    } catch (error) {
+        res.status(500).send({ success: false, message: error.message });
+    }
+}
 
 const _delete = async (req, res) => {
     try {
@@ -51,5 +61,5 @@ const _delete = async (req, res) => {
 }
 
 module.exports = {
-    create, get, getById, update, _delete
+    create, get, getById, update, _delete, alta_baja
 };

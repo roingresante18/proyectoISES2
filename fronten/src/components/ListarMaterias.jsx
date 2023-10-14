@@ -5,71 +5,45 @@ import axios from "axios";
 import { Button, Container, MenuList } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Navegador from "./Navegador";
-import ModalEdicion from "./ModalEdicion";
-import ModalBorrarUsuario from "./ModalBorrarUsuario";
+// import ModalEdicion from "./ModalEdicion";
+
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 
-function UserTable() {
-  const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
+function MateriasTable() {
+  const [Materias, setMaterias] = useState([]);
+  const [selectedMateria, setSelectedMateria] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectUserDelete, setSelectUserDelete] = useState(null);
+  const [selectMateriaDelete, setSelectMateriaDelete] = useState(null);
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
-  const [editedUserData, setEditedUserData] = useState({
+  const [editedMateriaData, setEditedMateriaData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_usuario: "",
-    dni: "",
+    id_materia: "",
     nombre: "",
-    apellido: "",
-    direccion: "",
-    correo1: "",
-    correo2: "",
-    telefono1: "",
-    telefono2: "",
-    fecha_nacimiento: "",
-    nacionalidad: "",
-    id_tipo_usuario: "",
-    id_estado_usuario: "",
-    
+    id_tipo_materia: "",
+       
   });
 
   const handleRadioChange = (e) => {
     const newValue = e.target.value;
-    setEditedUserData({
-      ...editedUserData,
-      id_tipo_usuario: newValue,
+    setEditedMateriaData({
+      ...editedMateriaData,
+      id_tipo_materia: newValue,
     });
   };
-  const handleRadioChange2 = (e) => {
-    const newValue = e.target.value;
-    setEditedUserData({
-      ...editedUserData,
-      id_estado_usuario: newValue,
-    });
-  };
+  
 
-  const [deleteUserData, setDeletedUserData] = useState({
+  const [deleteMateriaData, setDeletedMateriaData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_usuario: "",
-    dni: "",
+    id_materia: "",
     nombre: "",
-    apellido: "",
-    direccion: "",
-    correo1: "",
-    correo2: "",
-    telefono1: "",
-    telefono2: "",
-    fecha_nacimiento: "",
-    nacionalidad: "",
-    id_tipo_usuario: "",
-    id_estado_usuario: "",
-    alta_baja: "",
+    id_tipo_materia: "",
+       
   });
   const listado = async () => {
     try {
-      const respuesta = await axios.get("http://localhost:3000/api/v1/users");
+      const respuesta = await axios.get("http://localhost:3000/api/v1/materias");
       console.log([respuesta]);
-      setUsers(respuesta.data);
+      setMaterias(respuesta.data);
     } catch (error) {
       console.log(error);
     }
@@ -79,19 +53,9 @@ function UserTable() {
   }, []);
 
   const columns = [
-    { field: "id_usuario", headerName: "ID", width: 50 },
-    { field: "dni", headerName: "DNI", width: 100 },
+    { field: "id_materia", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", width: 100 },
-    { field: "apellido", headerName: "Apellido", width: 100 },
-    { field: "direccion", headerName: "Direccion", width: 100 },
-    { field: "correo1", headerName: "Correo 1", width: 100 },
-    { field: "correo2", headerName: "correo 2", width: 100 },
-    { field: "telefono1", headerName: "telefono 1", width: 100 },
-    { field: "telefono2", headerName: "telefono 2", width: 100 },
-    { field: "fecha_nacimiento", headerName: "fecha nacimiento", width: 100 },
-    { field: "nacionalidad", headerName: "Nacionalidad", width: 100 },
-    { field: "id_tipo_usuario", headerName: "tipo usuario", width: 50 },
-    { field: "id_estado_usuario", headerName: "estado usuario", width: 50 },
+    { field: "id_tipo_materia", headerName: "Tipo Materias", width: 100 },
   ];
 
   const handleEditModalClose = () => {
@@ -100,32 +64,22 @@ function UserTable() {
   };
 
   const handleDelete = () => {
-    if (selectUserDelete){
-      console.log("if de borrar: "+selectUserDelete);
-      setDeletedUserData({
-        id_usuario: selectUserDelete.id_usuario,
+    if (selectMateriaDelete){
+      console.log("if de borrar: "+selectMateriaDelete);
+      setDeletedMateriaData({
+        id_materia: selectMateriaDelete.id_materia,
         alta_baja: 0
       })
       setIsEditModa2Open(true)
     }}
  
   const handleEdit = () => { // Abre el modal de edición al hacer clic en el botón de "Editar"
-    if (selectedUser) {
-      console.log("if de handleEdit: "+ selectedUser); // Copia los datos de la fila seleccionada en el objeto de edición
-      setEditedUserData({
-        id_usuario: selectedUser.id_usuario,
-        dni: selectedUser.dni,
-        nombre: selectedUser.nombre,
-        apellido: selectedUser.apellido,
-        direccion: selectedUser.direccion,
-        correo1: selectedUser.correo1,
-        correo2: selectedUser.correo2,
-        telefono1: selectedUser.telefono1,
-        telefono2: selectedUser.telefono2,
-        fecha_nacimiento: selectedUser.fecha_nacimiento,
-        Nacionalidad: selectedUser.Nacionalidad,        
-        id_tipo_usuario: selectedUser.id_tipo_usuario,
-        id_estado_usuario: selectedUser.id_estado_usuario,
+    if (selectedMateria) {
+      console.log("if de handleEdit: "+ selectedMateria); // Copia los datos de la fila seleccionada en el objeto de edición
+      setEditedMateriaData({
+        id_materia: selectedMateria.id_materia,
+        nombre: selectedMateria.nombre,
+        id_tipo_materia: selectedMateria.id_tipo_materia,
         alta_baja: 1
       }); // Abre el modal de edición
       setIsEditModalOpen(true);
@@ -136,15 +90,15 @@ function UserTable() {
     try {
       // Envía los cambios al backend para actualizar el usuario
       await axios.put(
-        `http://localhost:3000/api/v1/users/${editedUserData.id_usuario}`,
-        editedUserData
+        `http://localhost:3000/api/v1/materias/${editedMateriaData.id_materia}`,
+        editedMateriaData
       );
 
       // Actualiza el estado local con los datos editados
-      const updatedUsers = users.map((user) =>
-        user.id_usuario === editedUserData.id_usuario ? editedUserData : user
+      const updatedMaterias = Materias.map((Materia) =>
+        Materia.id_materia === editedMateriaData.id_materia ? editedMateriaData : Materia
       );
-      setUsers(updatedUsers);
+      setMaterias(updatedMaterias);
 
       // Cierra el modal de edición
       setIsEditModalOpen(false);
@@ -158,21 +112,21 @@ function UserTable() {
     try {
       // Envía los cambios al backend para actualizar el usuario
       const response = await axios.put(
-        `http://localhost:3000/api/v1/users/${deleteUserData.id_usuario}`,
-        deleteUserData// Enviar solo el valor que deseas actualizar
+        `http://localhost:3000/api/v1/Materias/${deleteMateriaData.id_materia}`,
+        deleteMateriaData// Enviar solo el valor que deseas actualizar
       );
   
       if (response.status === 200) {
         // La solicitud PUT se realizó con éxito
         // Actualiza el estado local con el valor booleano actualizado
-        const updatedUsers = users.map((user) => {
-          if (user.id_usuario === deleteUserData.id_usuario) {
+        const updatedMaterias = Materias.map((Materia) => {
+          if (Materia.id_materia === deleteMateriaData.id_materia) {
             // Actualizar el valor booleano en el usuario actual
-            return { ...user, alta_baja: 0 };
+            return { ...Materia, alta_baja: 0 };
           }
-          return user;
+          return Materia;
         });
-        setUsers(updatedUsers);
+        setMaterias(updatedMaterias);
   
         // Cierra el modal de edición
         setIsEditModa2Open(false);
@@ -228,17 +182,16 @@ function UserTable() {
             justifyContent: "center",
           }}
         >
-          
           <DataGrid
-            rows={users.filter((user) => user.alta_baja === 1)}
+            rows={Materias.filter((Materia) => Materia.alta_baja === 1)}
             columns={[
               {
                 field: "radio",
                 renderCell: (params) => (
                   <input
                     type="radio"
-                    name="selectUser"
-                    checked={params.row.id_usuario === selectedUser?.id_usuario}
+                    name="selectMateria"
+                    checked={params.row.id_materia === selectedMateria?.id_materia}
                     onChange={() => handleRowSelection(params.row)}
                     style={{
                       width:20,
@@ -251,20 +204,20 @@ function UserTable() {
             ]}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
-            getRowId={(row) => row.id_usuario}
+            getRowId={(row) => row.id_materia}
             onRowSelectionModelChange={(newSelection) => {
               console.log("onSelectionModelChange executed:", newSelection);
               if (newSelection.length > 0) {
                 console.log("dentro de if seleccionado");
-                const selectedUserId = newSelection[0];
-                const selectedUser = users.find(
-                  (user) => user.id_usuario === selectedUserId
+                const selectedMateriaId = newSelection[0];
+                const selectedMateria = Materias.find(
+                  (Materia) => Materia.id_materia === selectedMateriaId
                 );
-                setSelectedUser(selectedUser);
-                setSelectUserDelete(selectedUser);
+                setSelectedMateria(selectedMateria);
+                setSelectMateriaDelete(selectedMateria);
               } else {
-                setSelectedUser(null);
-                setSelectUserDelete(null);
+                setSelectedMateria(null);
+                setSelectMateriaDelete(null);
                 console.log("dentro de elseif seleccionado");
               }
             }}
@@ -287,11 +240,11 @@ function UserTable() {
           />
 
           {/* Modal de edición */}
-          <Button
+          {/* <Button
             startIcon={<BorderColorOutlinedIcon />}
             variant="outlined"
             color="success"
-            disabled={!selectedUser}
+            disabled={!selectedMateria}
             onClick={handleEdit}
           >
             Editar
@@ -300,35 +253,34 @@ function UserTable() {
           <ModalEdicion
             open={isEditModalOpen}
             handleClose={() => setIsEditModalOpen(false)}
-            editedUserData={editedUserData}
+            editedMateriaData={editedMateriaData}
             handleSaveEdit={handleSaveEdit}
             handleEditModalClose={handleEditModalClose}
             handleRadioChange={handleRadioChange}
-            handleRadioChange2={handleRadioChange2}
-            setSelectedUser={setSelectedUser}
-            setEditedUserData={setEditedUserData}
-          />
+            setSelectedMateria={setSelectedMateria}
+            setEditedMateriaData={setEditedMateriaData}
+          /> */}
           {/* //modal de borrar usuario ********************************/}
           <Button
             startIcon={<DeleteIcon />}
             variant="outlined"
             color="error"
-            disabled={!selectUserDelete}
+            disabled={!selectMateriaDelete}
             onClick={handleDelete}
           >
             Borrar
           </Button>
 
-          <ModalBorrarUsuario
+          {/* <ModalBorrarMateria
             open={isEditModa2Open}
             handleClose={() => setIsEditModa2Open(false)}
             handleSaveDelete={handleSaveDelete}
             handleEditModalClose={handleEditModalClose}
-          />
+          /> */}
         </div>
       </Container>
     </>
   );
 }
 
-export default UserTable 
+export default MateriasTable 

@@ -5,7 +5,7 @@ import Home from './components/Home'
 import CargarMaterias from './components/CargarMateria'
 import UserTable from './components/ListarUsuarios'
 import ModalEdicion from './components/ModalEdicion'
-
+import MateriasTable from './components/ListarMaterias'
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         <Route path="/CargarMateria" element={<CargarMaterias/>} /> 
         <Route path="/listarusuarios" element={<UserTable/>} /> 
         <Route path="/modaledicion" element={<ModalEdicion/>} /> 
+        <Route path="/listarmaterias" element={<MateriasTable/>} /> 
       </Routes>
      </BrowserRouter>
     </>

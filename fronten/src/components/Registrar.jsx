@@ -11,7 +11,6 @@ import MenuItem from '@mui/material/MenuItem';
 import { useState, useEffect  } from "react";
 import Navegador from "./Navegador";
 import Button from "@mui/material/Button";
-
 import Modal from "@mui/material/Modal";
 
 const currencies = [
@@ -24,7 +23,7 @@ const currencies2 = [
   { value: '2', label: 'Inactivo', },
 ];
 
-const Registrar = () => {
+function Registrar () {
     const formik = useFormik({
     initialValues: {
       nombre: "",

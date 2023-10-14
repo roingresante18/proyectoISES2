@@ -7,15 +7,11 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
-import Menu from "@mui/material/Menu";
-import { Link } from "react-router-dom";
 import Navegador from "./Navegador";
+import Modal from "@mui/material/Modal";
 
 const currencies = [
   { value: '1', label: 'Cuatrimestral', },
@@ -23,29 +19,19 @@ const currencies = [
 ];
 
 const CargarMaterias = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
-
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
 
   const formik = useFormik({
     initialValues: {
         nombre: "",
         id_tipo_materia:"",
-      // id_estado_usuario:"",
-
-      //RESET FORMIK
+        alta_baja: "1",
+     
     },
 
-    //
     validationSchema: Yup.object({
       nombre: Yup.string().required("Debe ingresar un nombre"),
       id_tipo_materia: Yup.number().required("ingrese tipo materia"),
+      alta_baja: Yup.number(1).required("ingrese alt")
     }),
 
     //hasta aca
@@ -53,20 +39,28 @@ const CargarMaterias = () => {
     onSubmit: async (data) => {
       try {
         const respuesta = await axios.post("http://localhost:3000/api/v1/materias",data);
-        console.log(respuesta);
-        // navigate("http://localhost:5173/home");
+        abrirModal();
+        formik.resetForm();
+        
       } catch (error) {
         console.log(error);
       }
     },
   });
+  const [modalAbierto, setModalAbierto] = useState(false);
 
+  const abrirModal = () => {
+    setModalAbierto(true);
+  };
+
+  const cerrarModal = () => {
+    setModalAbierto(false);
+    formik.resetForm(); // Esto restablecerá el formulario a sus valores iniciales.
+  };
 
   return (
     <>
      <Navegador/>
-
-
       <Typography variant="h4" component="h4" color="blue" align="center"marginTop={"100px"}>
         Formulario de registro Materias
       </Typography>
@@ -102,9 +96,40 @@ const CargarMaterias = () => {
           ))}
           </TextField>
 
-           <Button variant="contained" type="submit" sx={{ width: 300, mt: 3 }}>
+           {/* <Button variant="contained" type="submit" sx={{ width: 300, mt: 3 }}>
+              Enviar Formulario
+            </Button> */}
+
+<Button variant="contained" type="submit" sx={{ width: 300, mt: 3, mx:1 }} disabled={!formik.isValid}>
               Enviar Formulario
             </Button>
+         
+          <Modal open={modalAbierto} onClose={cerrarModal}>
+            <Box sx={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: 400, bgcolor: "background.paper", border: "2px solid #000", boxShadow: 24, p: 4 }}>
+              <Typography variant="h6" component="div">
+                Formulario enviado con éxito.
+              </Typography>
+                <Button variant="contained" onClick={cerrarModal} sx={{ width: 300, mt: 3 }}>
+                  Cerrar
+                </Button>
+
+              </Box>
+          </Modal>
+
+
+
+
+
+            <IconButton
+            href="/listarmaterias"
+            variant="contained"
+            type="submit"
+            edge="start"
+            aria-label="menu"
+            sx={{ width: 300, mt: 3 }}
+          >
+            Ver Todas las Materias. 
+          </IconButton>
         </Grid>               
        
       </Box>
