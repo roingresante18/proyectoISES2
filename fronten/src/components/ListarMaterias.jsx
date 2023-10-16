@@ -8,6 +8,8 @@ import Navegador from "./Navegador";
 // import ModalEdicion from "./ModalEdicion";
 
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
+import ModalEdicionMaterias from "./ModalEdicionMateria";
+import ModalBorrarMateria from "./ModalBorrarMateria";
 
 function MateriasTable() {
   const [Materias, setMaterias] = useState([]);
@@ -54,7 +56,7 @@ function MateriasTable() {
 
   const columns = [
     { field: "id_materia", headerName: "ID", width: 50 },
-    { field: "nombre", headerName: "Nombre", width: 100 },
+    { field: "nombre", headerName: "Nombre", width: 250 },
     { field: "id_tipo_materia", headerName: "Tipo Materias", width: 100 },
   ];
 
@@ -240,7 +242,7 @@ function MateriasTable() {
           />
 
           {/* Modal de edición */}
-          {/* <Button
+          <Button
             startIcon={<BorderColorOutlinedIcon />}
             variant="outlined"
             color="success"
@@ -250,7 +252,7 @@ function MateriasTable() {
             Editar
           </Button>
 
-          <ModalEdicion
+          <ModalEdicionMaterias
             open={isEditModalOpen}
             handleClose={() => setIsEditModalOpen(false)}
             editedMateriaData={editedMateriaData}
@@ -259,7 +261,7 @@ function MateriasTable() {
             handleRadioChange={handleRadioChange}
             setSelectedMateria={setSelectedMateria}
             setEditedMateriaData={setEditedMateriaData}
-          /> */}
+          />
           {/* //modal de borrar usuario ********************************/}
           <Button
             startIcon={<DeleteIcon />}
@@ -271,12 +273,12 @@ function MateriasTable() {
             Borrar
           </Button>
 
-          {/* <ModalBorrarMateria
+          <ModalBorrarMateria
             open={isEditModa2Open}
             handleClose={() => setIsEditModa2Open(false)}
             handleSaveDelete={handleSaveDelete}
             handleEditModalClose={handleEditModalClose}
-          /> */}
+          />
         </div>
       </Container>
     </>
