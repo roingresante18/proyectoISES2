@@ -53,6 +53,10 @@ function ModalEdicion(props) {
                         dni: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
 
@@ -69,6 +73,10 @@ function ModalEdicion(props) {
                         nombre: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -84,6 +92,10 @@ function ModalEdicion(props) {
                         apellido: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -99,6 +111,10 @@ function ModalEdicion(props) {
                         direccion: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -114,6 +130,10 @@ function ModalEdicion(props) {
                         correo1: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -129,6 +149,10 @@ function ModalEdicion(props) {
                         correo2: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -144,6 +168,10 @@ function ModalEdicion(props) {
                         telefono1: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -159,6 +187,10 @@ function ModalEdicion(props) {
                         telefono2: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -174,6 +206,10 @@ function ModalEdicion(props) {
                         fecha_nacimiento: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -189,6 +225,10 @@ function ModalEdicion(props) {
                         nacionalidad: e.target.value,
                       })
                     }
+                    style={{
+                      margin:"10px",
+                      textAlign:"center"
+                    }}
                   />
                 </div>
                 <div>
@@ -200,6 +240,11 @@ function ModalEdicion(props) {
                         value="1"
                         checked={editedUserData.id_tipo_usuario === "1"}
                         onChange={(e) => handleRadioChange(e)}
+                        style={{
+                          width:20,
+                          height:20,
+                          margin:"10px",
+                        }}
                       />
                   <label htmlFor="administrador">Administrador</label>
 
@@ -210,6 +255,11 @@ function ModalEdicion(props) {
                         value="2"
                         checked={editedUserData.id_tipo_usuario === "2"}
                         onChange={(e) => handleRadioChange(e)}
+                        style={{
+                          width:20,
+                          height:20,
+                          
+                        }}
                       />
                   <label htmlFor="preceptor">Preceptor</label>
 
@@ -220,6 +270,10 @@ function ModalEdicion(props) {
                         value="3"
                         checked={editedUserData.id_tipo_usuario === "3"}
                         onChange={(e) => handleRadioChange(e)}
+                        style={{
+                          width:20,
+                          height:20,
+                        }}
                       />
                   <label htmlFor="alumno">Alumno/a</label>
                 </div>
@@ -233,6 +287,11 @@ function ModalEdicion(props) {
                         value="1"
                         checked={editedUserData.id_estado_usuario === "1"}
                         onChange={(e) => handleRadioChange2(e)}
+                        style={{
+                          width:20,
+                          height:20,
+                          margin:"10px",
+                        }}
                       />
                   <label htmlFor="administrador">Activo</label>
 
@@ -243,6 +302,11 @@ function ModalEdicion(props) {
                         value="2"
                         checked={editedUserData.id_estado_usuario === "2"}
                         onChange={(e) => handleRadioChange2(e)}
+                        style={{
+                          width:20,
+                          height:20,
+                          margin:"10px",
+                        }}
                       />
                   <label htmlFor="preceptor">Inactivo</label>
                 </div>
