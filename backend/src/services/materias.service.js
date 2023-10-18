@@ -20,7 +20,12 @@ class MateriaService {
     }
 
     async update(id, data) {
-        const models = await this.findOne(id);
+        const Materias = await this.findOne(id);
+        const res = await Materias.update(data);
+        return res;
+    }
+    async alta_baja(id, data) {
+        const Materias = await this.findOne(id);
         const res = await Materias.update(data);
         return res;
     }

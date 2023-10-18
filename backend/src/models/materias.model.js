@@ -20,6 +20,12 @@ const Materias = sequelize.define(
       type: DataTypes.INTEGER(11),
       field: "id_tipo_materia",
     },
+    alta_baja: {
+      allowNull: false,
+      type: DataTypes.INTEGER(11),
+      field: "alta_baja",
+    },
+
   },
   {
     timestamps: false, // para que se pueda conectar a la bd seteamos en false, lo correcto es que lo tenga activado
