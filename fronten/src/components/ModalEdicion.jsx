@@ -16,20 +16,19 @@ function ModalEdicion(props) {
     setEditedUserData
   } = props;
   const modalStyles = {
-    
+   
     position: "absolute",
-    flexDirection: "column",
-    margin: "20px",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "500px",
-    
     backgroundColor: "white",
-    padding: "20px",
     borderRadius: "8px",
-    boxShadow: "10px 10px 10px rgba(0, 0, 0, 0.2)",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.6)",
+    padding: "20px",
+
   };
+  
   return (
     <Modal
       open={open}

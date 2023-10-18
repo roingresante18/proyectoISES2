@@ -18,7 +18,6 @@ function Login () {
     <h1>LOGIN 2</h1>
     <h1>LOGIN 3</h1>
     <h1>LOGIN 4</h1>
-
     </>
   );
 }

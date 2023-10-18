@@ -9,129 +9,167 @@ import { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { ThemeProvider } from '@mui/material/styles';
-import theme from "../theme/theme"
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../theme/theme";
+import { red } from "@mui/material/colors";
+import { Modal, Backdrop } from "@mui/material";
 
 const Navegador = () => {
   const [anchorEl, setAnchorEl] = useState(null);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+
   const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    setMenuAnchorEl(event.currentTarget);
+    setIsMenuOpen(true);
   };
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
+    setIsMenuOpen(false);
+    setMenuAnchorEl(null);
   };
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" sx={{border:1}}>
-        <ThemeProvider theme={theme}>
-          <Toolbar variant="regular">
-
-            {/* MENU DESPLEGABLE */}
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              aria-controls="menu"
-              aria-haspopup="true"
-              onClick={handleMenuOpen}
-              sx={{ mr: 10, borderBottom:2, borderColor:"red"}}
-            >
-              <MenuIcon />
-            </IconButton>
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem onClick={handleMenuClose} >
-                <Link
-                  to="/registrar"
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    borderBottom: 1,
+        <AppBar position="fixed" sx={{ border: 1 }}>
+          <ThemeProvider theme={theme}>
+            <Toolbar variant="regular">
+              {/* MENU DESPLEGABLE */}
+              <IconButton
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                aria-controls="menu"
+                aria-haspopup="true"
+                onClick={handleMenuOpen}
+                sx={{ mr: 10, borderBottom: 2, borderColor: "red" }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Modal
+                open={isMenuOpen}
+                onClose={handleMenuClose}
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                  sx: { backgroundColor: "rgba(0, 0, 0, 0.7)" },
+                }}
+              >
+                <Menu
+                  anchorEl={menuAnchorEl}
+                  open={isMenuOpen}
+                  onClose={handleMenuClose}
+                  PaperProps={{
+                    sx: {
+                      width: "200px", // Ancho del menú
+                      borderRadius: "8px", // Borde redondeado
+                      height: "50%",
+                    },
                   }}
                 >
-                  Registrar Usuario
-                </Link>
-              </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/registrar"
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                      }}
+                    >
+                      Registrar Usuario
+                    </Link>
+                  </MenuItem>
 
-              <MenuItem onClick={handleMenuClose}>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/listarusuarios"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Listar Usuarios
+                    </Link>
+                  </MenuItem>
+
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/CargarMateria"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Registrar Materias
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              </Modal>
+
+              <Typography
+                variant="h6"
+                color="inherit"
+                component="div"
+                sx={{ mr: 2, borderBottom: 1 }}
+              >
                 <Link
-                  to="/listarusuarios"
+                  to="/home"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  Listar Usuarios
+                  Inicio
                 </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
+              </Typography>
+
+              <Typography
+                variant="h6"
+                color="inherit"
+                component="div"
+                sx={{ mr: 2, borderBottom: 1 }}
+              >
+                <Link
+                  to="/"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Login
+                </Link>
+              </Typography>
+
+              <Typography
+                variant="h6"
+                color="inherit"
+                component="div"
+                sx={{ mr: 2, borderBottom: 1 }}
+              >
+                <Link
+                  to="/Registrar"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Registro
+                </Link>
+              </Typography>
+
+              <Typography
+                variant="h6"
+                color="inherit"
+                component="div"
+                sx={{ mr: 2, borderBottom: 1 }}
+              >
                 <Link
                   to="/CargarMateria"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  Registrar Materias
+                  Registro Materias
                 </Link>
-              </MenuItem>
-            </Menu>
-
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2, borderBottom: 1,transition: 'box-shadow 0.3s','&:hover': {boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',borderRadius:1},}}
-            >
-              <Link
-                to="/home"
-                style={{ textDecoration: "none", color: "inherit" }}
+              </Typography>
+              <Typography
+                variant="h6"
+                color="inherit"
+                component="div"
+                sx={{ mr: 2, borderBottom: 1, color: red }}
               >
-                Inicio
-              </Link>
-            </Typography>
-
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2,borderBottom: 1}}
-            >
-              <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-                Login
-              </Link>
-            </Typography>
-
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2, borderBottom: 1 }}
-            >
-              <Link
-                to="/Registrar"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                Registro
-              </Link>
-            </Typography>
-
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2, borderBottom: 1 }}
-            >
-              <Link
-                to="/CargarMateria"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                Registro Materias
-              </Link>
-            </Typography>
-          </Toolbar>
-        </ThemeProvider>
+                <Link
+                  to="https://itesposadas.edu.ar/"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Ises
+                </Link>
+              </Typography>
+            </Toolbar>
+          </ThemeProvider>
         </AppBar>
       </Box>
     </>
