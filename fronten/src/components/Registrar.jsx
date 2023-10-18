@@ -110,13 +110,7 @@ function Registrar() {
         component="form"
         onSubmit={formik.handleSubmit}
       >
-        {/* <Grid
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="center"
-        > */}
-          <Grid
+                <Grid
             container
             spacing={2}
             columns={0}
@@ -496,7 +490,7 @@ function Registrar() {
               )}
             </div>
           </Grid>
-        {/* </Grid> */}
+       
         <Grid
           container
           direction="column"
@@ -509,6 +503,7 @@ function Registrar() {
             variant="contained"
             type="submit"
             sx={{ width: 300, mt: 3, mx: 1 }}
+            
           >
             Enviar Formulario
           </Button>
