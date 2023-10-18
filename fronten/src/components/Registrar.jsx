@@ -110,12 +110,12 @@ function Registrar() {
         component="form"
         onSubmit={formik.handleSubmit}
       >
-        <Grid
+        {/* <Grid
           container
           direction="column"
           justifyContent="center"
           alignItems="center"
-        >
+        > */}
           <Grid
             container
             spacing={2}
@@ -496,7 +496,7 @@ function Registrar() {
               )}
             </div>
           </Grid>
-        </Grid>
+        {/* </Grid> */}
         <Grid
           container
           direction="column"
