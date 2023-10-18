@@ -12,7 +12,7 @@ function App() {
     <>
      <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Login/>} /> 
+        <Route path="/" element={<Login/>} /> // INDEX ELEMENT
         <Route path="/home" element={<Home/>} /> 
         <Route path="/registrar" element={<Registrar/>} /> 
         <Route path="/CargarMateria" element={<CargarMaterias/>} /> 

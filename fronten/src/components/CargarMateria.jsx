@@ -83,7 +83,7 @@ const CargarMaterias = () => {
           <TextField
             type="number"
             select
-            label="id_tipo_materia"
+            label="Tipo Materia"
             variant="outlined"
             sx={{ width: 300, mt: 3 }}
             name="id_tipo_materia"
