@@ -123,7 +123,7 @@ function UserTable() {
         telefono1: selectedUser.telefono1,
         telefono2: selectedUser.telefono2,
         fecha_nacimiento: selectedUser.fecha_nacimiento,
-        Nacionalidad: selectedUser.Nacionalidad,        
+        nacionalidad: selectedUser.nacionalidad,        
         id_tipo_usuario: selectedUser.id_tipo_usuario,
         id_estado_usuario: selectedUser.id_estado_usuario,
         alta_baja: 1
