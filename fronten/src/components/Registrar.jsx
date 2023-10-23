@@ -82,6 +82,8 @@ function Registrar() {
     setModalAbierto(true);
   };
 
+  
+
   const cerrarModal = () => {
     setModalAbierto(false);
     formik.resetForm(); // Esto restablecerá el formulario a sus valores iniciales.

@@ -18,6 +18,7 @@ function UserTable() {
   const [editedUserData, setEditedUserData] = useState({
     // Inicializa los campos con valores predeterminados
     id_usuario: "",
+    clave:"",
     dni: "",
     nombre: "",
     apellido: "",
@@ -51,6 +52,7 @@ function UserTable() {
   const [deleteUserData, setDeletedUserData] = useState({
     // Inicializa los campos con valores predeterminados
     id_usuario: "",
+    clave:"",
     dni: "",
     nombre: "",
     apellido: "",
@@ -80,6 +82,7 @@ function UserTable() {
 
   const columns = [
     { field: "id_usuario", headerName: "ID", width: 50 },
+    { field: "clave", headerName: "CLAVE", width: 100 },
     { field: "dni", headerName: "DNI", width: 100 },
     { field: "nombre", headerName: "Nombre", width: 100 },
     { field: "apellido", headerName: "Apellido", width: 100 },
@@ -114,6 +117,7 @@ function UserTable() {
       console.log("if de handleEdit: "+ selectedUser); // Copia los datos de la fila seleccionada en el objeto de edición
       setEditedUserData({
         id_usuario: selectedUser.id_usuario,
+        clave: selectedUser.clave,
         dni: selectedUser.dni,
         nombre: selectedUser.nombre,
         apellido: selectedUser.apellido,

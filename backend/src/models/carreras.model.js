@@ -1,10 +1,10 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../database/database");
 
-const Materias = sequelize.define(
-  "materias",
+const Carreras = sequelize.define(
+  "carreras",
      {
-    id_materia:{
+    id_carrera:{
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -15,15 +15,10 @@ const Materias = sequelize.define(
         type: DataTypes.STRING,
         field:'nombre'
     },
-    id_tipo_materia: {
+    id_estado_carrera: {
       allowNull: false,
       type: DataTypes.INTEGER(11),
-      field: "id_tipo_materia",
-    },
-    id_estado_materia: {
-      allowNull: false,
-      type: DataTypes.INTEGER(11),
-      field: "id_estado_materia",
+      field: "id_estado_carrera",
     },
     alta_baja: {
       allowNull: false,
@@ -39,4 +34,4 @@ const Materias = sequelize.define(
 
 
 
-module.exports = Materias;
+module.exports = Carreras;

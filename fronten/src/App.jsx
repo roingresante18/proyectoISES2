@@ -6,7 +6,8 @@ import CargarMaterias from './components/CargarMateria'
 import UserTable from './components/ListarUsuarios'
 import ModalEdicion from './components/ModalEdicion'
 import MateriasTable from './components/ListarMaterias'
-
+import CargarCarrera from './components/CargarCarrera'
+import CarrerasTable from './components/ListarCarrera'
 function App() {
   return (
     <>
@@ -18,7 +19,10 @@ function App() {
         <Route path="/CargarMateria" element={<CargarMaterias/>} /> 
         <Route path="/listarusuarios" element={<UserTable/>} /> 
         <Route path="/modaledicion" element={<ModalEdicion/>} /> 
-        <Route path="/listarmaterias" element={<MateriasTable/>} /> 
+        <Route path="/listarmaterias" element={<MateriasTable/>} />
+        <Route path="/CargarCarrera" element={<CargarCarrera/>} /> 
+        <Route path="/listarcarreras" element={<CarrerasTable/>} />
+         
       </Routes>
      </BrowserRouter>
     </>

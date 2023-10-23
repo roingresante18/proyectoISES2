@@ -76,6 +76,14 @@ const Navegador = () => {
                   Registrar Materias
                 </Link>
               </MenuItem>
+              <MenuItem onClick={handleMenuClose}>
+                <Link
+                  to="/CargarCarrera"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  Registrar Carrera
+                </Link>
+              </MenuItem>
             </Menu>
 
             <Typography

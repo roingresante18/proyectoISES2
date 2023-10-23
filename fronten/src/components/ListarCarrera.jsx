@@ -11,7 +11,7 @@ import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 import ModalEdicionMaterias from "./ModalEdicionMateria";
 import ModalBorrarMateria from "./ModalBorrarMateria";
 
-function MateriasTable() {
+function CarrerasTable() {
   const [Materias, setMaterias] = useState([]);
   const [selectedMateria, setSelectedMateria] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -19,7 +19,7 @@ function MateriasTable() {
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
   const [editedMateriaData, setEditedMateriaData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_materia: "",
+    id_carrera: "",
     nombre: "",
     id_tipo_materia: "",
     id_estado_materia: "",
@@ -297,4 +297,4 @@ function MateriasTable() {
   );
 }
 
-export default MateriasTable 
+export default CarrerasTable 
