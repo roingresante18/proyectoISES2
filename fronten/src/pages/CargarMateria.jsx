@@ -10,31 +10,33 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
-import Navegador from "./Navegador";
+import Navegador from "../components/Navegador";
 import Modal from "@mui/material/Modal";
 
 const currencies = [
+  { value: '1', label: 'Regular', },
+  { value: '2', label: 'Promocional', },
+];
+const currencies2 = [
   { value: '1', label: 'Activo', },
   { value: '2', label: 'Inactivo', },
 ];
-// const currencies2 = [
-//   { value: '1', label: 'Activo', },
-//   { value: '2', label: 'Inactivo', },
-// ];
 
-const CargarCarrera = () => {
+const CargarMaterias = () => {
 
   const formik = useFormik({
     initialValues: {
         nombre: "",
-        id_estado_carrera:"",
+        id_tipo_materia:"",
+        id_estado_materia:"",
         alta_baja: "1",
      
     },
 
     validationSchema: Yup.object({
       nombre: Yup.string().required("Debe ingresar un nombre"),
-      iid_estado_carrera: Yup.number().required("ingrese estado carrera"),
+      id_tipo_materia: Yup.number().required("ingrese tipo materia"),
+      id_estado_materia: Yup.number().required("ingrese estado materia"),
       alta_baja: Yup.number(1).required("ingrese alt")
     }),
 
@@ -42,7 +44,7 @@ const CargarCarrera = () => {
 
     onSubmit: async (data) => {
       try {
-        const respuesta = await axios.post("http://localhost:3000/api/v1/carreras",data);
+        const respuesta = await axios.post("http://localhost:3000/api/v1/materias",data);
         abrirModal();
         formik.resetForm();
         
@@ -66,7 +68,7 @@ const CargarCarrera = () => {
     <>
      <Navegador/>
       <Typography variant="h4" component="h4" color="blue" align="center"marginTop={"100px"}>
-        Formulario de registro Carreras
+        Formulario de registro Materias
       </Typography>
       <Box sx={{ mt: 10 }} component="form" onSubmit={formik.handleSubmit}>
         <Grid
@@ -87,10 +89,10 @@ const CargarCarrera = () => {
           <TextField
             type="number"
             select
-            label="Estado Carrera"
+            label="Tipo Materia"
             variant="outlined"
             sx={{ width: 300, mt: 3 }}
-            name="id_estado_carrera"
+            name="id_tipo_materia"
             onChange={formik.handleChange}
           >
           {currencies.map((option) => (
@@ -100,7 +102,7 @@ const CargarCarrera = () => {
           ))}
           </TextField>
 
-          {/* <TextField
+          <TextField
             type="number"
             select
             label="Estado Materia"
@@ -114,7 +116,7 @@ const CargarCarrera = () => {
               {option.label}
             </MenuItem>
           ))}
-          </TextField> */}
+          </TextField>
 
 
 <Button variant="contained" type="submit" sx={{ width: 300, mt: 3, mx:1 }} disabled={!formik.isValid}>
@@ -138,14 +140,14 @@ const CargarCarrera = () => {
 
 
             <IconButton
-            href="/listarcarreras"
+            href="/listarmaterias"
             variant="contained"
             type="submit"
             edge="start"
             aria-label="menu"
             sx={{ width: 300, mt: 3 }}
           >
-            Ver Todas las Carreras. 
+            Ver Todas las Materias. 
           </IconButton>
         </Grid>               
        
@@ -154,4 +156,4 @@ const CargarCarrera = () => {
   );
 };
 
-export default CargarCarrera;
+export default CargarMaterias;

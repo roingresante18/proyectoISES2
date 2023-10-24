@@ -4,57 +4,75 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, MenuList } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Navegador from "./Navegador";
-// import ModalEdicion from "./ModalEdicion";
-
+import Navegador from "../Navegador";
+import ModalEdicion from "../ModalEdicion/ModalEdicion";
+import ModalBorrarUsuario from "../ModalBorrar/ModalBorrarUsuario";
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import ModalEdicionMaterias from "./ModalEdicionMateria";
-import ModalBorrarMateria from "./ModalBorrarMateria";
+import Typography from "@mui/material/Typography";
 
-function MateriasTable() {
-  const [Materias, setMaterias] = useState([]);
-  const [selectedMateria, setSelectedMateria] = useState(null);
+function UserTable() {
+  const [users, setUsers] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectMateriaDelete, setSelectMateriaDelete] = useState(null);
+  const [selectUserDelete, setSelectUserDelete] = useState(null);
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
-  const [editedMateriaData, setEditedMateriaData] = useState({
+  const [editedUserData, setEditedUserData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_materia: "",
+    id_usuario: "",
+    clave:"",
+    dni: "",
     nombre: "",
-    id_tipo_materia: "",
-    id_estado_materia: "",
-       
+    apellido: "",
+    direccion: "",
+    correo1: "",
+    correo2: "",
+    telefono1: "",
+    telefono2: "",
+    fecha_nacimiento: "",
+    nacionalidad: "",
+    id_tipo_usuario: "",
+    id_estado_usuario: "",
+    
   });
 
   const handleRadioChange = (e) => {
     const newValue = e.target.value;
-    setEditedMateriaData({
-      ...editedMateriaData,
-      id_tipo_materia: newValue,
+    setEditedUserData({
+      ...editedUserData,
+      id_tipo_usuario: newValue,
     });
   };
   const handleRadioChange2 = (e) => {
     const newValue = e.target.value;
-    setEditedMateriaData({
-      ...editedMateriaData,
-      id_estado_materia: newValue,
+    setEditedUserData({
+      ...editedUserData,
+      id_estado_usuario: newValue,
     });
   };
-  
 
-  const [deleteMateriaData, setDeletedMateriaData] = useState({
+  const [deleteUserData, setDeletedUserData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_materia: "",
+    id_usuario: "",
+    clave:"",
+    dni: "",
     nombre: "",
-    id_tipo_materia: "",
-    id_estado_materia: "",
-       
+    apellido: "",
+    direccion: "",
+    correo1: "",
+    correo2: "",
+    telefono1: "",
+    telefono2: "",
+    fecha_nacimiento: "",
+    nacionalidad: "",
+    id_tipo_usuario: "",
+    id_estado_usuario: "",
+    alta_baja: "",
   });
   const listado = async () => {
     try {
-      const respuesta = await axios.get("http://localhost:3000/api/v1/materias");
+      const respuesta = await axios.get("http://localhost:3000/api/v1/users");
       console.log([respuesta]);
-      setMaterias(respuesta.data);
+      setUsers(respuesta.data);
     } catch (error) {
       console.log(error);
     }
@@ -64,10 +82,20 @@ function MateriasTable() {
   }, []);
 
   const columns = [
-    { field: "id_materia", headerName: "ID", width: 50 },
-    { field: "nombre", headerName: "Nombre", width: 250 },
-    { field: "id_tipo_materia", headerName: "Tipo Materias", width: 100 },
-    { field: "id_estado_materia", headerName: "Estado Materias", width: 100 },
+    { field: "id_usuario", headerName: "ID", width: 50 },
+    { field: "clave", headerName: "CLAVE", width: 100 },
+    { field: "dni", headerName: "DNI", width: 100 },
+    { field: "nombre", headerName: "Nombre", width: 100 },
+    { field: "apellido", headerName: "Apellido", width: 100 },
+    { field: "direccion", headerName: "Direccion", width: 100 },
+    { field: "correo1", headerName: "Correo 1", width: 100 },
+    { field: "correo2", headerName: "correo 2", width: 100 },
+    { field: "telefono1", headerName: "telefono 1", width: 100 },
+    { field: "telefono2", headerName: "telefono 2", width: 100 },
+    { field: "fecha_nacimiento", headerName: "fecha nacimiento", width: 100 },
+    { field: "nacionalidad", headerName: "Nacionalidad", width: 100 },
+    { field: "id_tipo_usuario", headerName: "tipo usuario", width: 50 },
+    { field: "id_estado_usuario", headerName: "estado usuario", width: 50 },
   ];
 
   const handleEditModalClose = () => {
@@ -76,23 +104,33 @@ function MateriasTable() {
   };
 
   const handleDelete = () => {
-    if (selectMateriaDelete){
-      console.log("if de borrar: "+selectMateriaDelete);
-      setDeletedMateriaData({
-        id_materia: selectMateriaDelete.id_materia,
+    if (selectUserDelete){
+      console.log("if de borrar: "+selectUserDelete);
+      setDeletedUserData({
+        id_usuario: selectUserDelete.id_usuario,
         alta_baja: 0
       })
       setIsEditModa2Open(true)
     }}
  
   const handleEdit = () => { // Abre el modal de edición al hacer clic en el botón de "Editar"
-    if (selectedMateria) {
-      console.log("if de handleEdit: "+ selectedMateria); // Copia los datos de la fila seleccionada en el objeto de edición
-      setEditedMateriaData({
-        id_materia: selectedMateria.id_materia,
-        nombre: selectedMateria.nombre,
-        id_tipo_materia: selectedMateria.id_tipo_materia,
-        id_estado_materia: selectedMateria.id_estado_materia,
+    if (selectedUser) {
+      console.log("if de handleEdit: "+ selectedUser); // Copia los datos de la fila seleccionada en el objeto de edición
+      setEditedUserData({
+        id_usuario: selectedUser.id_usuario,
+        clave: selectedUser.clave,
+        dni: selectedUser.dni,
+        nombre: selectedUser.nombre,
+        apellido: selectedUser.apellido,
+        direccion: selectedUser.direccion,
+        correo1: selectedUser.correo1,
+        correo2: selectedUser.correo2,
+        telefono1: selectedUser.telefono1,
+        telefono2: selectedUser.telefono2,
+        fecha_nacimiento: selectedUser.fecha_nacimiento,
+        nacionalidad: selectedUser.nacionalidad,        
+        id_tipo_usuario: selectedUser.id_tipo_usuario,
+        id_estado_usuario: selectedUser.id_estado_usuario,
         alta_baja: 1
       }); // Abre el modal de edición
       setIsEditModalOpen(true);
@@ -103,15 +141,15 @@ function MateriasTable() {
     try {
       // Envía los cambios al backend para actualizar el usuario
       await axios.put(
-        `http://localhost:3000/api/v1/materias/${editedMateriaData.id_materia}`,
-        editedMateriaData
+        `http://localhost:3000/api/v1/users/${editedUserData.id_usuario}`,
+        editedUserData
       );
 
       // Actualiza el estado local con los datos editados
-      const updatedMaterias = Materias.map((Materia) =>
-        Materia.id_materia === editedMateriaData.id_materia ? editedMateriaData : Materia
+      const updatedUsers = users.map((user) =>
+        user.id_usuario === editedUserData.id_usuario ? editedUserData : user
       );
-      setMaterias(updatedMaterias);
+      setUsers(updatedUsers);
 
       // Cierra el modal de edición
       setIsEditModalOpen(false);
@@ -125,21 +163,21 @@ function MateriasTable() {
     try {
       // Envía los cambios al backend para actualizar el usuario
       const response = await axios.put(
-        `http://localhost:3000/api/v1/Materias/${deleteMateriaData.id_materia}`,
-        deleteMateriaData// Enviar solo el valor que deseas actualizar
+        `http://localhost:3000/api/v1/users/${deleteUserData.id_usuario}`,
+        deleteUserData// Enviar solo el valor que deseas actualizar
       );
   
       if (response.status === 200) {
         // La solicitud PUT se realizó con éxito
         // Actualiza el estado local con el valor booleano actualizado
-        const updatedMaterias = Materias.map((Materia) => {
-          if (Materia.id_materia === deleteMateriaData.id_materia) {
+        const updatedUsers = users.map((user) => {
+          if (user.id_usuario === deleteUserData.id_usuario) {
             // Actualizar el valor booleano en el usuario actual
-            return { ...Materia, alta_baja: 0 };
+            return { ...user, alta_baja: 0 };
           }
-          return Materia;
+          return user;
         });
-        setMaterias(updatedMaterias);
+        setUsers(updatedUsers);
   
         // Cierra el modal de edición
         setIsEditModa2Open(false);
@@ -170,10 +208,17 @@ function MateriasTable() {
   return (
     <>
       <Navegador />
+      <Typography
+      variant="h5"
+      color=""
+      component="div"
+      sx={{ mr: 2, borderBottom: 1 ,marginTop:10}}>
+        Listado de Usuarios
+      </Typography>
       <Container
         sx={{
           display: "flex  ",
-          marginTop: "70px",
+          marginTop: "10px",
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
@@ -195,16 +240,17 @@ function MateriasTable() {
             justifyContent: "center",
           }}
         >
+          
           <DataGrid
-            rows={Materias.filter((Materia) => Materia.alta_baja === 1)}
+            rows={users.filter((user) => user.alta_baja === 1)}
             columns={[
               {
-                field: "radio",
+                field: "",
                 renderCell: (params) => (
                   <input
                     type="radio"
-                    name="selectMateria"
-                    checked={params.row.id_materia === selectedMateria?.id_materia}
+                    name="selectUser"
+                    checked={params.row.id_usuario === selectedUser?.id_usuario}
                     onChange={() => handleRowSelection(params.row)}
                     style={{
                       width:20,
@@ -217,20 +263,20 @@ function MateriasTable() {
             ]}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
-            getRowId={(row) => row.id_materia}
+            getRowId={(row) => row.id_usuario}
             onRowSelectionModelChange={(newSelection) => {
               console.log("onSelectionModelChange executed:", newSelection);
               if (newSelection.length > 0) {
                 console.log("dentro de if seleccionado");
-                const selectedMateriaId = newSelection[0];
-                const selectedMateria = Materias.find(
-                  (Materia) => Materia.id_materia === selectedMateriaId
+                const selectedUserId = newSelection[0];
+                const selectedUser = users.find(
+                  (user) => user.id_usuario === selectedUserId
                 );
-                setSelectedMateria(selectedMateria);
-                setSelectMateriaDelete(selectedMateria);
+                setSelectedUser(selectedUser);
+                setSelectUserDelete(selectedUser);
               } else {
-                setSelectedMateria(null);
-                setSelectMateriaDelete(null);
+                setSelectedUser(null);
+                setSelectUserDelete(null);
                 console.log("dentro de elseif seleccionado");
               }
             }}
@@ -257,35 +303,35 @@ function MateriasTable() {
             startIcon={<BorderColorOutlinedIcon />}
             variant="outlined"
             color="success"
-            disabled={!selectedMateria}
+            disabled={!selectedUser}
             onClick={handleEdit}
           >
             Editar
           </Button>
 
-          <ModalEdicionMaterias
+          <ModalEdicion
             open={isEditModalOpen}
             handleClose={() => setIsEditModalOpen(false)}
-            editedMateriaData={editedMateriaData}
+            editedUserData={editedUserData}
             handleSaveEdit={handleSaveEdit}
             handleEditModalClose={handleEditModalClose}
             handleRadioChange={handleRadioChange}
             handleRadioChange2={handleRadioChange2}
-            setSelectedMateria={setSelectedMateria}
-            setEditedMateriaData={setEditedMateriaData}
+            setSelectedUser={setSelectedUser}
+            setEditedUserData={setEditedUserData}
           />
           {/* //modal de borrar usuario ********************************/}
           <Button
             startIcon={<DeleteIcon />}
             variant="outlined"
             color="error"
-            disabled={!selectMateriaDelete}
+            disabled={!selectUserDelete}
             onClick={handleDelete}
           >
             Borrar
           </Button>
 
-          <ModalBorrarMateria
+          <ModalBorrarUsuario
             open={isEditModa2Open}
             handleClose={() => setIsEditModa2Open(false)}
             handleSaveDelete={handleSaveDelete}
@@ -297,4 +343,4 @@ function MateriasTable() {
   );
 }
 
-export default MateriasTable 
+export default UserTable 

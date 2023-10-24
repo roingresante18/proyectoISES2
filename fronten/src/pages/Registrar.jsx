@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from "@mui/material/MenuItem";
 import { useState, useEffect } from "react";
-import Navegador from "./Navegador";
+import Navegador from "../components/Navegador";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import { ThemeProvider } from "@mui/material";
@@ -17,6 +17,8 @@ import themeFormik from "../theme/themeFormik";
 import theme from "../theme/theme";
 import SearchIcon from "@mui/icons-material/Search";
 import ClearIcon from "@mui/icons-material/Clear";
+
+
 const currencies = [
   { value: "1", label: "Administrador" },
   { value: "2", label: "Preceptor/a" },

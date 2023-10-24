@@ -9,137 +9,177 @@ import { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import { ThemeProvider } from '@mui/material/styles';
-import theme from "../theme/theme"
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../theme/theme";
 
 const Navegador = () => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [listadosAnchorEl, setListadosAnchorEl] = useState(null);
+  const [registrosAnchorEl, setRegistrosAnchorEl] = useState(null);
 
-  const handleMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+  const handleListadosMenuOpen = (event) => {
+    setListadosAnchorEl(event.currentTarget);
+  };
+
+  const handleRegistrosMenuOpen = (event) => {
+    setRegistrosAnchorEl(event.currentTarget);
   };
 
   const handleMenuClose = () => {
-    setAnchorEl(null);
+    setListadosAnchorEl(null);
+    setRegistrosAnchorEl(null);
   };
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" sx={{border:1}}>
-        <ThemeProvider theme={theme}>
-          <Toolbar variant="regular">
-
-            {/* MENU DESPLEGABLE */}
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              aria-controls="menu"
-              aria-haspopup="true"
-              onClick={handleMenuOpen}
-              sx={{ mr: 10, borderBottom:2, borderColor:"red"}}
+        <AppBar position="fixed" sx={{ border: 1 }}>
+          <ThemeProvider theme={theme}>
+            <Toolbar variant="dense"
+            style={{
+              margin:"2px",
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "normal"
+            }}
+            
+            
             >
-              <MenuIcon />
-            </IconButton>
-
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem onClick={handleMenuClose} >
+              <Typography
+                variant="h6"
+                color="inherit"
+                component="div"
+                sx={{
+                  mr: 2,
+                  borderBottom: 1,
+                  transition: "box-shadow 0.3s",
+                  "&:hover": {
+                    boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)",
+                    borderRadius: 1,
+                  },
+                }}
+              >
                 <Link
-                  to="/registrar"
-                  style={{
-                    textDecoration: "none",
-                    color: "inherit",
-                    borderBottom: 1,
-                  }}
+                  to="/home"
+                  style={{ textDecoration: "none", color: "inherit"}}
                 >
-                  Registrar Usuario
+                  Inicio
                 </Link>
-              </MenuItem>
+              </Typography>
 
-              <MenuItem onClick={handleMenuClose}>
+              <Typography
+                variant="h6"
+                color="inherit"
+                component="div"
+                sx={{ mr: 2, borderBottom: 1}}
+              >
                 <Link
-                  to="/listarusuarios"
+                  to="/"
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
-                  Listar Usuarios
+                  Login
                 </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  to="/CargarMateria"
-                  style={{ textDecoration: "none", color: "inherit" }}
+              </Typography>
+              
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="menu"
+                  aria-controls="listados-menu"
+                  aria-haspopup="true"
+                  onClick={handleListadosMenuOpen}
+                  sx={{ mr: 20, borderBottom: 2, borderColor: "red" }}
                 >
-                  Registrar Materias
-                </Link>
-              </MenuItem>
-              <MenuItem onClick={handleMenuClose}>
-                <Link
-                  to="/CargarCarrera"
-                  style={{ textDecoration: "none", color: "inherit" }}
+                  Listados
+                  {/* <MenuIcon 
+               /> */}
+                </IconButton>
+
+                <Menu
+                  anchorEl={listadosAnchorEl}
+                  open={Boolean(listadosAnchorEl)}
+                  onClose={handleMenuClose}
+                  id="listados-menu"
                 >
-                  Registrar Carrera
-                </Link>
-              </MenuItem>
-            </Menu>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/listarusuarios"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Listar Usuarios
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/listarmaterias"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Listar Materias
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/listarcarreras"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Listar Carrera
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              
 
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2, borderBottom: 1,transition: 'box-shadow 0.3s','&:hover': {boxShadow: '0 0 10px rgba(0, 0, 0, 0.2)',borderRadius:1},}}
-            >
-              <Link
-                to="/home"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                Inicio
-              </Link>
-            </Typography>
+              
+                <IconButton
+                  edge="start"
+                  color="inherit"
+                  aria-label="Registros"
+                  aria-controls="registros-menu"
+                  aria-haspopup="true"
+                  onClick={handleRegistrosMenuOpen}
+                  sx={{ mr: 20, borderBottom: 2, borderColor: "red" }}
+                >
+                  Registros
+                  {/* <MenuIcon 
+               /> */}
+                </IconButton>
 
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2,borderBottom: 1}}
-            >
-              <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-                Login
-              </Link>
-            </Typography>
-
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2, borderBottom: 1 }}
-            >
-              <Link
-                to="/Registrar"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                Registro
-              </Link>
-            </Typography>
-
-            <Typography
-              variant="h6"
-              color="inherit"
-              component="div"
-              sx={{ mr: 2, borderBottom: 1 }}
-            >
-              <Link
-                to="/CargarMateria"
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                Registro Materias
-              </Link>
-            </Typography>
-          </Toolbar>
-        </ThemeProvider>
+                <Menu
+                  anchorEl={registrosAnchorEl}
+                  open={Boolean(registrosAnchorEl)}
+                  onClose={handleMenuClose}
+                  id="registros-menu"
+                >
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/registrar"
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                        borderBottom: 1,
+                      }}
+                    >
+                      Registrar Usuario
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/CargarMateria"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Registrar Materias
+                    </Link>
+                  </MenuItem>
+                  <MenuItem onClick={handleMenuClose}>
+                    <Link
+                      to="/CargarCarrera"
+                      style={{ textDecoration: "none", color: "inherit" }}
+                    >
+                      Registrar Carrera
+                    </Link>
+                  </MenuItem>
+                </Menu>
+              
+            </Toolbar>
+          </ThemeProvider>
         </AppBar>
       </Box>
     </>

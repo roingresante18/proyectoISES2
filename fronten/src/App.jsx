@@ -1,13 +1,14 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import Login from './components/Login'
-import Registrar from './components/Registrar'
-import Home from './components/Home'
-import CargarMaterias from './components/CargarMateria'
-import UserTable from './components/ListarUsuarios'
-import ModalEdicion from './components/ModalEdicion'
-import MateriasTable from './components/ListarMaterias'
-import CargarCarrera from './components/CargarCarrera'
-import CarrerasTable from './components/ListarCarrera'
+import Login from './pages/Login'
+import Registrar from './pages/Registrar'
+import Home from './pages/Home'
+import CargarMaterias from './pages/CargarMateria'
+import UserTable from './components/ModalListar/ListarUsuarios'
+import ModalEdicion from './components/ModalEdicion/ModalEdicion'
+import MateriasTable from './components/ModalListar/ListarMaterias'
+import CargarCarrera from './pages/CargarCarrera'
+import CarrerasTable from './components/ModalListar/ListarCarrera'
+
 function App() {
   return (
     <>

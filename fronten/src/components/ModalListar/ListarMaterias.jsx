@@ -4,14 +4,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, MenuList } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Navegador from "./Navegador";
+import Navegador from "../Navegador";
 // import ModalEdicion from "./ModalEdicion";
-
+import Typography from "@mui/material/Typography";
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import ModalEdicionMaterias from "./ModalEdicionMateria";
-import ModalBorrarMateria from "./ModalBorrarMateria";
+import ModalEdicionMaterias from "../ModalEdicion/ModalEdicionMateria";
+import ModalBorrarMateria from "../ModalBorrar/ModalBorrarMateria";
 
-function CarrerasTable() {
+function MateriasTable() {
   const [Materias, setMaterias] = useState([]);
   const [selectedMateria, setSelectedMateria] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -19,7 +19,7 @@ function CarrerasTable() {
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
   const [editedMateriaData, setEditedMateriaData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_carrera: "",
+    id_materia: "",
     nombre: "",
     id_tipo_materia: "",
     id_estado_materia: "",
@@ -170,10 +170,17 @@ function CarrerasTable() {
   return (
     <>
       <Navegador />
+      <Typography
+      variant="h5"
+      color=""
+      component="div"
+      sx={{ mr: 2, borderBottom: 1 ,marginTop:10}}>
+        Listado de Materias
+      </Typography>
       <Container
         sx={{
           display: "flex  ",
-          marginTop: "70px",
+          marginTop: "10px",
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
@@ -199,7 +206,7 @@ function CarrerasTable() {
             rows={Materias.filter((Materia) => Materia.alta_baja === 1)}
             columns={[
               {
-                field: "radio",
+                field: "",
                 renderCell: (params) => (
                   <input
                     type="radio"
@@ -297,4 +304,4 @@ function CarrerasTable() {
   );
 }
 
-export default CarrerasTable 
+export default MateriasTable 
