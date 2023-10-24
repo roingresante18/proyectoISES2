@@ -23,7 +23,7 @@ function App() {
         <Route path="/listarmaterias" element={<MateriasTable/>} />
         <Route path="/CargarCarrera" element={<CargarCarrera/>} /> 
         <Route path="/listarcarreras" element={<CarrerasTable/>} />
-         
+        
       </Routes>
      </BrowserRouter>
     </>

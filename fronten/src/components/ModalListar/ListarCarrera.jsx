@@ -9,7 +9,7 @@ import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import ModalEdicionCarrera from "../ModalEdicion/ModalEdicionCarrera"
 import Typography from "@mui/material/Typography";
 import ModalBorrarCarrera from "../ModalBorrar/ModalBorrarCarrera"
-
+ 
 function CarrerasTable() {
   const [Carreras, setCarreras] = useState([]);
   const [selectedMateria, setSelectedMateria] = useState(null);
