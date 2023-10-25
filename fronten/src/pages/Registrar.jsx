@@ -85,10 +85,6 @@ function Registrar() {
         });
 // const userss 
 
-        console.log(respuestas.data);
-
-
-
         const respuesta = await axios.post(
           "http://localhost:3000/api/v1/users",
           {
@@ -109,27 +105,26 @@ function Registrar() {
             alta_baja: data.alta_baja,
           }       
         );
-        console.log(respuesta);
-
-        const userID = data.id_usuario;
-        console.log(data.id_usuario);
-        console.log(data.id_tipo_usuario);
-
+        
+        console.log('------- POST USER ---------',respuesta);
+        console.log('------- POST USER ---------',respuesta.data.data.id_usuario);
 
 
         if (data.id_tipo_usuario === "3") {
           // Si es un alumno, inserta el legajo en la tabla de alumnos
+          
           await axios.post(
             "http://localhost:3000/api/v1/alumnos",
             {
               legajo: data.legajo,
               fecha_inscripcion: data.fecha_inscripcion,
               id_carrera: data.id_carrera,
-              id_usuario: userID, // Asocia al usuario recién insertado
+              id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
             }
           );
-          console.log("aca esta el error");
-          console.log(error);
+          
+
+          
         }
 
         abrirModal();
