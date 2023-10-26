@@ -26,6 +26,15 @@ function MateriasTable() {
        
   });
 
+  const tipoMateriaMap = {
+    1: "Regular",
+    2: "Promocional",
+  };
+  const estadoMateriaMap = {
+    1: "Activo",
+    2: "Inactivo",
+  };
+
   const handleRadioChange = (e) => {
     const newValue = e.target.value;
     setEditedMateriaData({
@@ -66,8 +75,12 @@ function MateriasTable() {
   const columns = [
     { field: "id_materia", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", width: 250 },
-    { field: "id_tipo_materia", headerName: "Tipo Materias", width: 100 },
-    { field: "id_estado_materia", headerName: "Estado Materias", width: 100 },
+    { field: "id_tipo_materia", headerName: "Tipo Materias", width: 150,
+    valueGetter: (params) => tipoMateriaMap[params.row.id_tipo_materia] || "",
+  },
+    { field: "id_estado_materia", headerName: "Estado Materias", width: 150,
+    valueGetter: (params) => estadoMateriaMap[params.row.id_estado_materia] || "",
+  },
   ];
 
   const handleEditModalClose = () => {

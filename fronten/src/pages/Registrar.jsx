@@ -35,7 +35,7 @@ const currencies3 = [
 function Registrar() {
   const formik = useFormik({
     initialValues: {
-      id_usuario:"",
+      id_usuario: "",
       nombre: "",
       apellido: "",
       clave: "",
@@ -56,7 +56,6 @@ function Registrar() {
     },
     //
     validationSchema: Yup.object({
-      // id_usuario: Yup.string().required("Debe ingresar un Nombre"),
       nombre: Yup.string().required("Debe ingresar un Nombre"),
       apellido: Yup.string().required("Debe ingresar Apellido"),
       clave: Yup.string().required("ingrese una clave"),
@@ -77,18 +76,9 @@ function Registrar() {
     }),
     onSubmit: async (data) => {
       try {
-        const respuestas = await axios.get
-        ("http://localhost:3000/api/v1/users",{
-          data
-
-
-        });
-// const userss 
-
         const respuesta = await axios.post(
           "http://localhost:3000/api/v1/users",
           {
-            // id_usuario: data.id_usuario,
             nombre: data.nombre,
             apellido: data.apellido,
             clave: data.clave,
@@ -103,28 +93,24 @@ function Registrar() {
             id_tipo_usuario: data.id_tipo_usuario,
             id_estado_usuario: data.id_estado_usuario,
             alta_baja: data.alta_baja,
-          }       
+          }
         );
-        
-        console.log('------- POST USER ---------',respuesta);
-        console.log('------- POST USER ---------',respuesta.data.data.id_usuario);
 
+        console.log("------- POST USER ---------", respuesta);
+        console.log(
+          "------- POST USER ---------",
+          respuesta.data.data.id_usuario
+        );
 
         if (data.id_tipo_usuario === "3") {
           // Si es un alumno, inserta el legajo en la tabla de alumnos
-          
-          await axios.post(
-            "http://localhost:3000/api/v1/alumnos",
-            {
-              legajo: data.legajo,
-              fecha_inscripcion: data.fecha_inscripcion,
-              id_carrera: data.id_carrera,
-              id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
-            }
-          );
-          
 
-          
+          await axios.post("http://localhost:3000/api/v1/alumnos", {
+            legajo: data.legajo,
+            fecha_inscripcion: data.fecha_inscripcion,
+            id_carrera: data.id_carrera,
+            id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
+          });
         }
 
         abrirModal();
@@ -145,6 +131,8 @@ function Registrar() {
     setModalAbierto(false);
     formik.resetForm(); // Esto restablecerá el formulario a sus valores iniciales.
   };
+ 
+
   return (
     <>
       <Navegador />

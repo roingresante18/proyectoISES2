@@ -22,7 +22,10 @@ function CarrerasTable() {
     nombre: "",
     id_estado_carrera: "",
   });
-
+  const estadoCarreraMap = {
+    1: "Activo",
+    2: "Inactivo",
+  };
   const handleRadioChange = (e) => {
     const newValue = e.target.value;
     setEditedMateriaData({
@@ -55,7 +58,9 @@ function CarrerasTable() {
   const columns = [
     { field: "id_carrera", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", width: 250 },
-    { field: "id_estado_carrera", headerName: "Estado carrera", width: 150 },
+    { field: "id_estado_carrera", headerName: "Estado carrera", width: 150,
+    valueGetter: (params) => estadoCarreraMap[params.row.id_estado_carrera] || "",
+  },
   ];
 
   const handleEditModalClose = () => {

@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import Navegador from "../Navegador";
 import ModalEdicion from "../ModalEdicion/ModalEdicion";
 import ModalBorrarUsuario from "../ModalBorrar/ModalBorrarUsuario";
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import Typography from "@mui/material/Typography";
 
 function UserTable() {
@@ -19,7 +19,7 @@ function UserTable() {
   const [editedUserData, setEditedUserData] = useState({
     // Inicializa los campos con valores predeterminados
     id_usuario: "",
-    clave:"",
+    clave: "",
     dni: "",
     nombre: "",
     apellido: "",
@@ -32,8 +32,20 @@ function UserTable() {
     nacionalidad: "",
     id_tipo_usuario: "",
     id_estado_usuario: "",
-    
+    legajo: "",
+    fecha_inscripcion: "",
+    id_carrera: "",
   });
+
+  const tipoUsuarioMap = {
+    1: "Administrador",
+    2: "Preceptor/a",
+    3: "Alumno/a",
+  };
+  const estadoUsuarioMap = {
+    1: "Activo",
+    2: "Inactivo",
+  };
 
   const handleRadioChange = (e) => {
     const newValue = e.target.value;
@@ -53,7 +65,7 @@ function UserTable() {
   const [deleteUserData, setDeletedUserData] = useState({
     // Inicializa los campos con valores predeterminados
     id_usuario: "",
-    clave:"",
+    clave: "",
     dni: "",
     nombre: "",
     apellido: "",
@@ -67,6 +79,9 @@ function UserTable() {
     id_tipo_usuario: "",
     id_estado_usuario: "",
     alta_baja: "",
+    legajo: "",
+    fecha_inscripcion: "",
+    id_carrera: "",
   });
   const listado = async () => {
     try {
@@ -94,28 +109,42 @@ function UserTable() {
     { field: "telefono2", headerName: "telefono 2", width: 100 },
     { field: "fecha_nacimiento", headerName: "fecha nacimiento", width: 100 },
     { field: "nacionalidad", headerName: "Nacionalidad", width: 100 },
-    { field: "id_tipo_usuario", headerName: "tipo usuario", width: 50 },
-    { field: "id_estado_usuario", headerName: "estado usuario", width: 50 },
+    {
+      field: "id_tipo_usuario",
+      headerName: "tipo usuario",
+      width: 150,
+      valueGetter: (params) => tipoUsuarioMap[params.row.id_tipo_usuario] || "",
+    },
+    {
+      field: "id_estado_usuario",
+      headerName: "estado usuario",
+      width: 150,
+
+      valueGetter: (params) =>
+        estadoUsuarioMap[params.row.id_estado_usuario] || "",
+    },
   ];
 
   const handleEditModalClose = () => {
     setIsEditModalOpen(false);
-    setIsEditModa2Open(false)
+    setIsEditModa2Open(false);
   };
 
   const handleDelete = () => {
-    if (selectUserDelete){
-      console.log("if de borrar: "+selectUserDelete);
+    if (selectUserDelete) {
+      console.log("if de borrar: " + selectUserDelete);
       setDeletedUserData({
         id_usuario: selectUserDelete.id_usuario,
-        alta_baja: 0
-      })
-      setIsEditModa2Open(true)
-    }}
- 
-  const handleEdit = () => { // Abre el modal de edición al hacer clic en el botón de "Editar"
+        alta_baja: 0,
+      });
+      setIsEditModa2Open(true);
+    }
+  };
+
+  const handleEdit = () => {
+    // Abre el modal de edición al hacer clic en el botón de "Editar"
     if (selectedUser) {
-      console.log("if de handleEdit: "+ selectedUser); // Copia los datos de la fila seleccionada en el objeto de edición
+      console.log("if de handleEdit: " + selectedUser); // Copia los datos de la fila seleccionada en el objeto de edición
       setEditedUserData({
         id_usuario: selectedUser.id_usuario,
         clave: selectedUser.clave,
@@ -128,10 +157,13 @@ function UserTable() {
         telefono1: selectedUser.telefono1,
         telefono2: selectedUser.telefono2,
         fecha_nacimiento: selectedUser.fecha_nacimiento,
-        nacionalidad: selectedUser.nacionalidad,        
+        nacionalidad: selectedUser.nacionalidad,
         id_tipo_usuario: selectedUser.id_tipo_usuario,
         id_estado_usuario: selectedUser.id_estado_usuario,
-        alta_baja: 1
+        alta_baja: 1,
+        legajo: selectedUser.legajo,
+        fecha_inscripcion: selectedUser.fecha_inscripcion,
+        id_carrera: selectedUser.id_carrera,
       }); // Abre el modal de edición
       setIsEditModalOpen(true);
     }
@@ -140,11 +172,39 @@ function UserTable() {
   const handleSaveEdit = async () => {
     try {
       // Envía los cambios al backend para actualizar el usuario
-      await axios.put(
+       await axios.put(
         `http://localhost:3000/api/v1/users/${editedUserData.id_usuario}`,
-        editedUserData
+        {
+          nombre: editedUserData.nombre,
+          apellido: editedUserData.apellido,
+          clave: editedUserData.clave,
+          dni: editedUserData.dni,
+          nacionalidad: editedUserData.nacionalidad,
+          direccion: editedUserData.direccion,
+          correo1: editedUserData.correo1,
+          correo2: editedUserData.correo2,
+          telefono1: editedUserData.telefono1,
+          telefono2: editedUserData.telefono2,
+          fecha_nacimiento: editedUserData.fecha_nacimiento,
+          id_tipo_usuario: editedUserData.id_tipo_usuario,
+          id_estado_usuario: editedUserData.id_estado_usuario,
+          alta_baja: 1,
+        }
       );
+      console.log("------- POST USER ---------",);
 
+      console.log(editedUserData.id_usuario);
+      if (editedUserData.id_tipo_usuario === "3") {
+        await axios.put(
+          `http://localhost:3000/api/v1/alumnos/${editedUserData.id_alumno}`,
+          {
+            legajo: editedUserData.legajo,
+            fecha_inscripcion: editedUserData.fecha_inscripcion,
+            id_carrera: editedUserData.id_carrera,
+            id_usuario: editedUserData.id_usuario,
+          }
+        );
+      }
       // Actualiza el estado local con los datos editados
       const updatedUsers = users.map((user) =>
         user.id_usuario === editedUserData.id_usuario ? editedUserData : user
@@ -155,7 +215,7 @@ function UserTable() {
       setIsEditModalOpen(false);
       // setIsEditModa2Open(false);
     } catch (error) {
-      console.log("no se pudo ahcer la coneccion "+error);
+      console.log("no se pudo ahcer la coneccion " + error);
     }
   };
 
@@ -164,9 +224,9 @@ function UserTable() {
       // Envía los cambios al backend para actualizar el usuario
       const response = await axios.put(
         `http://localhost:3000/api/v1/users/${deleteUserData.id_usuario}`,
-        deleteUserData// Enviar solo el valor que deseas actualizar
+        deleteUserData // Enviar solo el valor que deseas actualizar
       );
-  
+
       if (response.status === 200) {
         // La solicitud PUT se realizó con éxito
         // Actualiza el estado local con el valor booleano actualizado
@@ -178,41 +238,43 @@ function UserTable() {
           return user;
         });
         setUsers(updatedUsers);
-  
+
         // Cierra el modal de edición
         setIsEditModa2Open(false);
       } else {
-        console.log("Error al actualizar el usuario. Código de estado HTTP:", response.status);
+        console.log(
+          "Error al actualizar el usuario. Código de estado HTTP:",
+          response.status
+        );
       }
     } catch (error) {
       console.error("No se pudo hacer la conexión:", error);
     }
   };
 
-  
   const customLocaleText = {
-  toolbarExport: "Exportar",
-  toolbarColumns: "Columnas",
-  toolbarFilters: "Filtros",
-  toolbarDensity: "Vista",
-  toolbarDensityCompact: 'Compacto',
-  toolbarDensityStandard: 'Standard',
-  toolbarDensityComfortable: 'Confortable',
-  columnsPanelShowAllButton: 'Mostrar todo',
-  columnsPanelHideAllButton: 'Ocultar todo',
-  toolbarExportCSV: 'Exportar CSV',
-  toolbarExportPrint: 'Imprimir',
+    toolbarExport: "Exportar",
+    toolbarColumns: "Columnas",
+    toolbarFilters: "Filtros",
+    toolbarDensity: "Vista",
+    toolbarDensityCompact: "Compacto",
+    toolbarDensityStandard: "Standard",
+    toolbarDensityComfortable: "Confortable",
+    columnsPanelShowAllButton: "Mostrar todo",
+    columnsPanelHideAllButton: "Ocultar todo",
+    toolbarExportCSV: "Exportar CSV",
+    toolbarExportPrint: "Imprimir",
   };
-  
-  
+
   return (
     <>
       <Navegador />
       <Typography
-      variant="h5"
-      color=""
-      component="div"
-      sx={{ mr: 2, borderBottom: 1 ,marginTop:10}}>
+        variant="h5"
+        color=""
+        component="div"
+        sx={{ mr: 2, borderBottom: 1, marginTop: 10 }}
+      >
         Listado de Usuarios
       </Typography>
       <Container
@@ -240,7 +302,6 @@ function UserTable() {
             justifyContent: "center",
           }}
         >
-          
           <DataGrid
             rows={users.filter((user) => user.alta_baja === 1)}
             columns={[
@@ -253,13 +314,13 @@ function UserTable() {
                     checked={params.row.id_usuario === selectedUser?.id_usuario}
                     onChange={() => handleRowSelection(params.row)}
                     style={{
-                      width:20,
-                      height:20,
+                      width: 20,
+                      height: 20,
                     }}
                   />
                 ),
               },
-              ...columns, 
+              ...columns,
             ]}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
@@ -343,4 +404,4 @@ function UserTable() {
   );
 }
 
-export default UserTable 
+export default UserTable;
