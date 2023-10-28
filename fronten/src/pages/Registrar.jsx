@@ -70,9 +70,7 @@ function Registrar() {
       id_tipo_usuario: Yup.number().required("defina tipo de Usuario"),
       id_estado_usuario: Yup.number().required("defina estado de usuario"),
       alta_baja: Yup.number(1).required("ingrese alt"),
-      legajo: Yup.string().required("defina legajo"),
-      fecha_inscripcion: Yup.date().required("defina fecha inscripcion"),
-      id_carrera: Yup.number().required("defina la carrera"),
+      
     }),
     onSubmit: async (data) => {
       try {
@@ -101,7 +99,6 @@ function Registrar() {
           "------- POST USER ---------",
           respuesta.data.data.id_usuario
         );
-
         if (data.id_tipo_usuario === "3") {
           // Si es un alumno, inserta el legajo en la tabla de alumnos
 
@@ -131,7 +128,6 @@ function Registrar() {
     setModalAbierto(false);
     formik.resetForm(); // Esto restablecerá el formulario a sus valores iniciales.
   };
- 
 
   return (
     <>

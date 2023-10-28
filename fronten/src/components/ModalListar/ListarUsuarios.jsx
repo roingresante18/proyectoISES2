@@ -12,10 +12,13 @@ import Typography from "@mui/material/Typography";
 
 function UserTable() {
   const [users, setUsers] = useState([]);
+  const [alumnos, setAlumnos] = useState([]);
+
   const [selectedUser, setSelectedUser] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectUserDelete, setSelectUserDelete] = useState(null);
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
+
   const [editedUserData, setEditedUserData] = useState({
     // Inicializa los campos con valores predeterminados
     id_usuario: "",
@@ -85,9 +88,19 @@ function UserTable() {
   });
   const listado = async () => {
     try {
-      const respuesta = await axios.get("http://localhost:3000/api/v1/users");
+      const respuesta = await axios.get(
+        "http://localhost:3000/api/v1/users");
+
+      const alumnosResponse = await axios.get(
+        "http://localhost:3000/api/v1/alumnos"
+      );
       console.log([respuesta]);
-      setUsers(respuesta.data);
+      console.log([alumnosResponse]);
+      if (respuesta.status === 200 && alumnosResponse.status === 200) {
+        // Almacena los datos en los estados correspondientes
+        setUsers(respuesta.data);
+        setAlumnos(alumnosResponse.data);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -172,7 +185,7 @@ function UserTable() {
   const handleSaveEdit = async () => {
     try {
       // Envía los cambios al backend para actualizar el usuario
-       await axios.put(
+      await axios.put(
         `http://localhost:3000/api/v1/users/${editedUserData.id_usuario}`,
         {
           nombre: editedUserData.nombre,
@@ -191,34 +204,50 @@ function UserTable() {
           alta_baja: 1,
         }
       );
-      console.log("------- POST USER ---------",);
+      console.log("------- POST USER ---------");
 
-      console.log(editedUserData.id_usuario);
-      if (editedUserData.id_tipo_usuario === "3") {
-        await axios.put(
-          `http://localhost:3000/api/v1/alumnos/${editedUserData.id_alumno}`,
-          {
-            legajo: editedUserData.legajo,
-            fecha_inscripcion: editedUserData.fecha_inscripcion,
-            id_carrera: editedUserData.id_carrera,
-            id_usuario: editedUserData.id_usuario,
-          }
+      if (userResponse.status === 200) {
+        // La actualización del usuario se realizó con éxito
+        // Obten el valor de id_usuario generado por la base de datos
+        const newUserId = userResponse.data.id_usuario;
+        console.log("Nuevo id_usuario:", newUserId);
+
+        // Actualiza el estado local con los datos editados
+        const updatedUsers = users.map((user) =>
+          user.id_usuario === editedUserData.id_usuario ? editedUserData : user
         );
+        setUsers(updatedUsers);
+
+        if (editedUserData.id_tipo_usuario === "3") {
+          // Realiza una solicitud para obtener el id_alumno
+          const alumnoResponse = await axios.get(
+            `http://localhost:3000/api/v1/alumnos/user/${newUserId}`
+          );
+          if (alumnoResponse.status === 200) {
+            const alumnoData = alumnoResponse.data;
+            const idAlumno = alumnoData.id_alumno;
+            console.log("Id_alumno:", idAlumno);
+
+            // Ahora puedes realizar la actualización en la tabla "alumno" con id_alumno
+            await axios.put(
+              `http://localhost:3000/api/v1/alumnos/${idAlumno}`,
+              {
+                legajo: editedUserData.legajo,
+                fecha_inscripcion: editedUserData.fecha_inscripcion,
+                id_carrera: editedUserData.id_carrera,
+                id_usuario: editedUserData.id_usuario,
+              }
+            );
+          }
+        }
       }
-      // Actualiza el estado local con los datos editados
-      const updatedUsers = users.map((user) =>
-        user.id_usuario === editedUserData.id_usuario ? editedUserData : user
-      );
-      setUsers(updatedUsers);
-
-      // Cierra el modal de edición
-      setIsEditModalOpen(false);
-      // setIsEditModa2Open(false);
     } catch (error) {
-      console.log("no se pudo ahcer la coneccion " + error);
+      console.log("no se pudo hacer la conexión " + error);
     }
+    // Cierra el modal de edición
+    setIsEditModalOpen(false);
+    // setIsEditModa2Open(false);
   };
-
   const handleSaveDelete = async () => {
     try {
       // Envía los cambios al backend para actualizar el usuario

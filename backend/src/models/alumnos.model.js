@@ -22,12 +22,12 @@ const Alumnos = sequelize.define(
   },
     id_carrera: {
       allowNull: false,
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       field: "id_carrera",
     },
     id_usuario: {
       allowNull: false,
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.INTEGER,
       field: "id_usuario",
       // foreingkey: "id_usuario",
     },
