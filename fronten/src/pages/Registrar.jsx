@@ -20,7 +20,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 const currencies = [
   { value: "1", label: "Administrador" },
-  { value: "2", label: "Preceptor/a" },
+  { value: "2", label: "Pofesor" },
   { value: "3", label: "Alumno/a" },
 ];
 const currencies2 = [
@@ -70,7 +70,6 @@ function Registrar() {
       id_tipo_usuario: Yup.number().required("defina tipo de Usuario"),
       id_estado_usuario: Yup.number().required("defina estado de usuario"),
       alta_baja: Yup.number(1).required("ingrese alt"),
-      
     }),
     onSubmit: async (data) => {
       try {
@@ -99,15 +98,30 @@ function Registrar() {
           "------- POST USER ---------",
           respuesta.data.data.id_usuario
         );
-        if (data.id_tipo_usuario === "3") {
-          // Si es un alumno, inserta el legajo en la tabla de alumnos
 
+        // de acuerdo a que tipo de usuario es carga en la tabla correspondiente
+
+        if (data.id_tipo_usuario === "3") {  //TABLA ALUMNO
           await axios.post("http://localhost:3000/api/v1/alumnos", {
             legajo: data.legajo,
             fecha_inscripcion: data.fecha_inscripcion,
             id_carrera: data.id_carrera,
             id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
           });
+        }
+
+        if (data.id_tipo_usuario === "2") {     //TABLA PROFESOR
+          await axios.post("http://localhost:3000/api/v1/profesores", {
+            id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
+          });
+          console.log("enviado a profesor")
+        }
+
+        if (data.id_tipo_usuario === "1") {     //TABLA ADMIN
+          await axios.post("http://localhost:3000/api/v1/administradores", {
+            id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
+          });
+          console.log("enviado a administrador")
         }
 
         abrirModal();
