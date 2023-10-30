@@ -238,8 +238,8 @@ function ModalEdicion(props) {
               type="radio"
               id="administrador"
               name="id_tipo_usuario"
+              checked={editedUserData.id_tipo_usuario === 1}
               value="1"
-              checked={editedUserData.id_tipo_usuario === "1"}
               onChange={(e) => handleRadioChange(e)}
               style={{
                 width: 20,
@@ -252,8 +252,8 @@ function ModalEdicion(props) {
               type="radio"
               id="profesor"
               name="id_tipo_usuario"
+              checked={editedUserData.id_tipo_usuario === 2}
               value="2"
-              checked={editedUserData.id_tipo_usuario === "2"}
               onChange={(e) => handleRadioChange(e)}
               style={{
                 width: 20,
@@ -265,8 +265,8 @@ function ModalEdicion(props) {
               type="radio"
               id="alumno"
               name="id_tipo_usuario"
+              checked={editedUserData.id_tipo_usuario === 3}
               value="3"
-              checked={editedUserData.id_tipo_usuario === "3"}
               onChange={(e) => handleRadioChange(e)}
               style={{
                 width: 20,
@@ -283,7 +283,7 @@ function ModalEdicion(props) {
               id="activo"
               name="id_estado_usuario"
               value="1"
-              checked={editedUserData.id_estado_usuario === "1"}
+              checked={editedUserData.id_estado_usuario === 1}
               onChange={(e) => handleRadioChange2(e)}
               style={{
                 width: 20,
@@ -297,7 +297,7 @@ function ModalEdicion(props) {
               id="inactivo"
               name="id_estado_usuario"
               value="2"
-              checked={editedUserData.id_estado_usuario === "2"}
+              checked={editedUserData.id_estado_usuario === 2}
               onChange={(e) => handleRadioChange2(e)}
               style={{
                 width: 20,
@@ -313,7 +313,7 @@ function ModalEdicion(props) {
               htmlFor="legajo"
               style={{
                 display:
-                  editedUserData.id_tipo_usuario === "3" ? "block" : "none",
+                  editedUserData.id_tipo_usuario === 3 ? "block" : "none",
               }}
             >
               Legajo:
@@ -333,7 +333,7 @@ function ModalEdicion(props) {
                 margin: "10px",
                 textAlign: "center",
                 display:
-                  editedUserData.id_tipo_usuario === "3" ? "block" : "none",
+                  editedUserData.id_tipo_usuario === 3 ? "block" : "none",
               }}
             />
           </div>
@@ -362,7 +362,7 @@ function ModalEdicion(props) {
                 margin: "10px",
                 textAlign: "center",
                 display:
-                  editedUserData.id_tipo_usuario === "3" ? "block" : "none",
+                  editedUserData.id_tipo_usuario === 3 ? "block" : "none",
               }}
             />
           </div>
@@ -371,7 +371,7 @@ function ModalEdicion(props) {
               htmlFor="id_carrera"
               style={{
                 display:
-                  editedUserData.id_tipo_usuario === "3" ? "block" : "none",
+                  editedUserData.id_tipo_usuario === 3 ? "block" : "none",
               }}
             >
               Seleccione la Carrera
@@ -391,7 +391,7 @@ function ModalEdicion(props) {
                 margin: "10px",
                 textAlign: "center",
                 display:
-                  editedUserData.id_tipo_usuario === "3" ? "block" : "none",
+                  editedUserData.id_tipo_usuario === 3 ? "block" : "none",
               }}
             />
           </div>

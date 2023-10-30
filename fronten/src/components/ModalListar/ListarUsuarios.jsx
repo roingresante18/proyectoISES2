@@ -15,11 +15,14 @@ function UserTable() {
   const [alumnos, setAlumnos] = useState([]);
 
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedAlumno, setSelectedAlumno] = useState(null);
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectUserDelete, setSelectUserDelete] = useState(null);
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
 
   const [editedUserDataAlumno, setEditedUserDataAlumno] = useState({
+    id_alumno: "",
     legajo: "",
     fecha_inscripcion: "",
     id_carrera: "",
@@ -54,14 +57,14 @@ function UserTable() {
   };
 
   const handleRadioChange = (e) => {
-    const newValue = e.target.value;
+    const newValue = parseInt(e.target.value, 10);
     setEditedUserData({
       ...editedUserData,
       id_tipo_usuario: newValue,
     });
   };
   const handleRadioChange2 = (e) => {
-    const newValue = e.target.value;
+    const newValue =  parseInt(e.target.value, 10);
     setEditedUserData({
       ...editedUserData,
       id_estado_usuario: newValue,
@@ -93,9 +96,7 @@ function UserTable() {
     try {
       const respuesta = await axios.get("http://localhost:3000/api/v1/users");
 
-      const alumnosResponse = await axios.get(
-        "http://localhost:3000/api/v1/alumnos"
-      );
+      const alumnosResponse = await axios.get("http://localhost:3000/api/v1/alumnos");
       console.log([respuesta]);
       console.log([alumnosResponse]);
       if (respuesta.status === 200 && alumnosResponse.status === 200) {
@@ -176,21 +177,19 @@ function UserTable() {
         id_tipo_usuario: selectedUser.id_tipo_usuario,
         id_estado_usuario: selectedUser.id_estado_usuario,
         alta_baja: 1,
-        legajo: selectedUser.legajo,
-        fecha_inscripcion: selectedUser.fecha_inscripcion,
-        id_carrera: selectedUser.id_carrera,
+        // legajo: selectedUser.legajo,
+        // fecha_inscripcion: selectedUser.fecha_inscripcion,
+        // id_carrera: selectedUser.id_carrera,
       }); // Abre el modal de edición
 
       // Verifica si el tipo de usuario es "Alumno" (3)
       if (selectedUser.id_tipo_usuario === 3) {
-        // Realiza una solicitud para obtener los datos adicionales del alumno
-        axios
-          .get(
-            `http://localhost:3000/api/v1/alumnos/user/${selectedUser.id_usuario}`
-          )
-          .then((alumnoResponse) => {
-            if (alumnoResponse.status === 200) {
-              const alumnoData = alumnoResponse.data;
+        //Realiza una solicitud para obtener los datos adicionales del alumno
+        axios.get(`http://localhost:3000/api/v1/alumnos/${selectedUser.id_usuario}`)
+          .then((alumnosResponse) => {
+            console.error("Error :", alumnosResponse);
+            if (alumnosResponse.status === 200) {
+              const alumnoData = alumnosResponse.data;
 
               // Actualiza los datos del alumno
               setEditedUserDataAlumno({
@@ -203,6 +202,13 @@ function UserTable() {
           .catch((error) => {
             console.error("Error al obtener datos del alumno:", error);
           });
+        // if (selectedAlumno) {
+        //   setEditedUserDataAlumno({
+        //     legajo: selectedAlumno.legajo,
+        //     fecha_inscripcion: selectedAlumno.fecha_inscripcion,
+        //     id_carrera: selectedAlumno.id_carrera,
+        //   });
+        // }
       }
 
       setIsEditModalOpen(true);
@@ -255,7 +261,7 @@ function UserTable() {
         if (editedUserData.id_tipo_usuario === 3) {
           // Realiza una solicitud para obtener el id_alumno
           const alumnoResponse = await axios.get(
-            `http://localhost:3000/api/v1/alumnos/user/${newUserId}`
+            `http://localhost:3000/api/v1/alumnos/${newUserId}`
           );
           if (alumnoResponse.status === 200) {
             const alumnoData = alumnoResponse.data;
@@ -445,7 +451,7 @@ function UserTable() {
             setSelectedUser={setSelectedUser}
             setEditedUserData={setEditedUserData}
             editedUserDataAlumno={editedUserDataAlumno}
-            setEditedUserDataAlumno={editedUserDataAlumno}
+            setEditedUserDataAlumno={setEditedUserDataAlumno}
           />
           {/* //modal de borrar usuario ********************************/}
           <Button

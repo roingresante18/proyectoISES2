@@ -630,9 +630,11 @@ function Registrar() {
               onChange={formik.handleChange}
               error={!!formik.errors.id_carrera}
             >
+              
               {Carreras.map((opcion) => (
-                <MenuItem key={opcion.id} value={opcion.id_carrera}>
+                <MenuItem key={opcion.id_carrera} value={opcion.id_carrera}>
                   {opcion.nombre}
+                  
                 </MenuItem>
               ))}
             </TextField>
