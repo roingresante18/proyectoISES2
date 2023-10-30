@@ -27,12 +27,29 @@ const currencies2 = [
   { value: "1", label: "Activo" },
   { value: "2", label: "Inactivo" },
 ];
-const currencies3 = [
-  { value: "1", label: "carrera 1" },
-  { value: "2", label: "carrera 2" },
-];
+// const currencies3 = [
+//   { value: "1", label: "carrera 1" },
+//   { value: "2", label: "carrera 2" },
+// ];
 
 function Registrar() {
+  const [Carreras, setCarreras] = useState([]);
+
+  const listarCarreras = async () => {
+    try {
+      const respuesta12 = await axios.get(
+        "http://localhost:3000/api/v1/carreras"
+      );
+      setCarreras(respuesta12.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    listarCarreras();
+  }, []);
+
   const formik = useFormik({
     initialValues: {
       id_usuario: "",
@@ -101,7 +118,8 @@ function Registrar() {
 
         // de acuerdo a que tipo de usuario es carga en la tabla correspondiente
 
-        if (data.id_tipo_usuario === "3") {  //TABLA ALUMNO
+        if (data.id_tipo_usuario === "3") {
+          //TABLA ALUMNO
           await axios.post("http://localhost:3000/api/v1/alumnos", {
             legajo: data.legajo,
             fecha_inscripcion: data.fecha_inscripcion,
@@ -110,18 +128,20 @@ function Registrar() {
           });
         }
 
-        if (data.id_tipo_usuario === "2") {     //TABLA PROFESOR
+        if (data.id_tipo_usuario === "2") {
+          //TABLA PROFESOR
           await axios.post("http://localhost:3000/api/v1/profesores", {
             id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
           });
-          console.log("enviado a profesor")
+          console.log("enviado a profesor");
         }
 
-        if (data.id_tipo_usuario === "1") {     //TABLA ADMIN
+        if (data.id_tipo_usuario === "1") {
+          //TABLA ADMIN
           await axios.post("http://localhost:3000/api/v1/administradores", {
             id_usuario: respuesta.data.data.id_usuario, // Asocia al usuario recién insertado
           });
-          console.log("enviado a administrador")
+          console.log("enviado a administrador");
         }
 
         abrirModal();
@@ -594,20 +614,25 @@ function Registrar() {
             <TextField
               type="number"
               select
-              label="carrera"
+              label="Seleccione carrera"
               variant="outlined"
-              sx={{ width: 300, mt: 3 }}
+              sx={{
+                width: 300,
+                mt: 3,
+                mx: 1,
+                display:
+                  formik.values.id_tipo_usuario === "3" ? "block" : "none",
+                "& .MuiSelect-select": {
+                  padding: "2px", // Ajusta el padding para hacerlo más grande
+                },
+              }}
               name="id_carrera"
               onChange={formik.handleChange}
               error={!!formik.errors.id_carrera}
-              style={{
-                display:
-                  formik.values.id_tipo_usuario === "3" ? "block" : "none",
-              }}
             >
-              {currencies3.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {Carreras.map((opcion) => (
+                <MenuItem key={opcion.id} value={opcion.id_carrera}>
+                  {opcion.nombre}
                 </MenuItem>
               ))}
             </TextField>

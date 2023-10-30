@@ -19,6 +19,12 @@ function UserTable() {
   const [selectUserDelete, setSelectUserDelete] = useState(null);
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
 
+  const [editedUserDataAlumno, setEditedUserDataAlumno] = useState({
+    legajo: "",
+    fecha_inscripcion: "",
+    id_carrera: "",
+  });
+
   const [editedUserData, setEditedUserData] = useState({
     // Inicializa los campos con valores predeterminados
     id_usuario: "",
@@ -35,9 +41,6 @@ function UserTable() {
     nacionalidad: "",
     id_tipo_usuario: "",
     id_estado_usuario: "",
-    legajo: "",
-    fecha_inscripcion: "",
-    id_carrera: "",
   });
 
   const tipoUsuarioMap = {
@@ -88,8 +91,7 @@ function UserTable() {
   });
   const listado = async () => {
     try {
-      const respuesta = await axios.get(
-        "http://localhost:3000/api/v1/users");
+      const respuesta = await axios.get("http://localhost:3000/api/v1/users");
 
       const alumnosResponse = await axios.get(
         "http://localhost:3000/api/v1/alumnos"
@@ -178,6 +180,31 @@ function UserTable() {
         fecha_inscripcion: selectedUser.fecha_inscripcion,
         id_carrera: selectedUser.id_carrera,
       }); // Abre el modal de edición
+
+      // Verifica si el tipo de usuario es "Alumno" (3)
+      if (selectedUser.id_tipo_usuario === 3) {
+        // Realiza una solicitud para obtener los datos adicionales del alumno
+        axios
+          .get(
+            `http://localhost:3000/api/v1/alumnos/user/${selectedUser.id_usuario}`
+          )
+          .then((alumnoResponse) => {
+            if (alumnoResponse.status === 200) {
+              const alumnoData = alumnoResponse.data;
+
+              // Actualiza los datos del alumno
+              setEditedUserDataAlumno({
+                legajo: alumnoData.legajo,
+                fecha_inscripcion: alumnoData.fecha_inscripcion,
+                id_carrera: alumnoData.id_carrera,
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error al obtener datos del alumno:", error);
+          });
+      }
+
       setIsEditModalOpen(true);
     }
   };
@@ -216,9 +243,16 @@ function UserTable() {
         const updatedUsers = users.map((user) =>
           user.id_usuario === editedUserData.id_usuario ? editedUserData : user
         );
+        const updatedAlumnos = alumnos.map((alumno) =>
+          alumno.id_alumno === editedUserDataAlumno.id_alumno
+            ? editedUserDataAlumno
+            : alumno
+        );
+
+        setAlumnos(updatedAlumnos);
         setUsers(updatedUsers);
 
-        if (editedUserData.id_tipo_usuario === "3") {
+        if (editedUserData.id_tipo_usuario === 3) {
           // Realiza una solicitud para obtener el id_alumno
           const alumnoResponse = await axios.get(
             `http://localhost:3000/api/v1/alumnos/user/${newUserId}`
@@ -232,9 +266,9 @@ function UserTable() {
             await axios.put(
               `http://localhost:3000/api/v1/alumnos/${idAlumno}`,
               {
-                legajo: editedUserData.legajo,
-                fecha_inscripcion: editedUserData.fecha_inscripcion,
-                id_carrera: editedUserData.id_carrera,
+                legajo: editedUserDataAlumno.legajo,
+                fecha_inscripcion: editedUserDataAlumno.fecha_inscripcion,
+                id_carrera: editedUserDataAlumno.id_carrera,
                 id_usuario: editedUserData.id_usuario,
               }
             );
@@ -248,6 +282,7 @@ function UserTable() {
     setIsEditModalOpen(false);
     // setIsEditModa2Open(false);
   };
+
   const handleSaveDelete = async () => {
     try {
       // Envía los cambios al backend para actualizar el usuario
@@ -409,6 +444,8 @@ function UserTable() {
             handleRadioChange2={handleRadioChange2}
             setSelectedUser={setSelectedUser}
             setEditedUserData={setEditedUserData}
+            editedUserDataAlumno={editedUserDataAlumno}
+            setEditedUserDataAlumno={editedUserDataAlumno}
           />
           {/* //modal de borrar usuario ********************************/}
           <Button

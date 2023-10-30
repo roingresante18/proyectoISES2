@@ -13,6 +13,8 @@ function ModalEdicion(props) {
     handleRadioChange2,
     setSelectedUser,
     setEditedUserData,
+    editedUserDataAlumno,
+    setEditedUserDataAlumno,
   } = props;
   const modalStyles = {
     position: "absolute",
@@ -229,6 +231,7 @@ function ModalEdicion(props) {
               }}
             />
           </div>
+          {/* ///////////////////////////////////////////////////////////////////////////////////////7 */}
           <div>
             <label htmlFor="id_tipo_usuario">Tipo de Usuario:</label>
             <input
@@ -247,7 +250,7 @@ function ModalEdicion(props) {
             <label htmlFor="administrador">Administrador</label>
             <input
               type="radio"
-              id="preceptor"
+              id="profesor"
               name="id_tipo_usuario"
               value="2"
               checked={editedUserData.id_tipo_usuario === "2"}
@@ -257,7 +260,7 @@ function ModalEdicion(props) {
                 height: 20,
               }}
             />
-            <label htmlFor="preceptor">Preceptor</label>
+            <label htmlFor="profesor">Profesor</label>
             <input
               type="radio"
               id="alumno"
@@ -272,7 +275,7 @@ function ModalEdicion(props) {
             />
             <label htmlFor="alumno">Alumno/a</label>
           </div>
-
+{/* //////////////////////////////////////////////////////////////////////////////////77////// */}
           <div>
             <label htmlFor="id_estado_usuario">Estado Usuario:</label>
             <input
@@ -319,10 +322,10 @@ function ModalEdicion(props) {
               type="text"
               id="legajo"
               name="legajo"
-              value={editedUserData.legajo}
+              value={editedUserDataAlumno.legajo}
               onChange={(e) =>
-                setEditedUserData({
-                  ...editedUserData,
+                setEditedUserDataAlumno({
+                  ...editedUserDataAlumno,
                   legajo: e.target.value,
                 })
               }
@@ -348,10 +351,10 @@ function ModalEdicion(props) {
               type="date"
               id="fecha_inscripcion"
               name="fecha_inscripcion"
-              value={editedUserData.fecha_inscripcion}
+              value={editedUserDataAlumno.fecha_inscripcion}
               onChange={(e) =>
-                setEditedUserData({
-                  ...editedUserData,
+                setEditedUserDataAlumno({
+                  ...editedUserDataAlumno,
                   fecha_inscripcion: e.target.value,
                 })
               }
@@ -377,10 +380,10 @@ function ModalEdicion(props) {
               type="number"
               id="id_carrera"
               name="id_carrera"
-              value={editedUserData.id_carrera}
+              value={editedUserDataAlumno.id_carrera}
               onChange={(e) =>
-                setEditedUserData({
-                  ...editedUserData,
+                setEditedUserDataAlumno({
+                  ...editedUserDataAlumno,
                   id_carrera: e.target.value,
                 })
               }
