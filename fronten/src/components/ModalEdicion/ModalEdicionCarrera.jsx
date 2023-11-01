@@ -61,7 +61,7 @@ function ModalEdicionCarrera(props) {
               id="activo"
               name="id_estado_carrera"
               value="1"
-              checked={editedMateriaData.id_estado_carrera === "1"}
+              checked={editedMateriaData.id_estado_carrera === 1}
               onChange={(e) => handleRadioChange(e)}
               style={{
                 width: 20,
@@ -76,7 +76,7 @@ function ModalEdicionCarrera(props) {
               id="inactivo"
               name="id_estado_carrera"
               value="2"
-              checked={editedMateriaData.id_estado_carrera=== "2"}
+              checked={editedMateriaData.id_estado_carrera=== 2}
               onChange={(e) => handleRadioChange(e)}
               style={{
                 width: 20,

@@ -27,7 +27,7 @@ function CarrerasTable() {
     2: "Inactivo",
   };
   const handleRadioChange = (e) => {
-    const newValue = e.target.value;
+    const newValue = parseInt(e.target.value, 10);
     setEditedMateriaData({
       ...editedMateriaData,
       id_estado_carrera: newValue,

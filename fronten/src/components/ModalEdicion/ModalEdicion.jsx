@@ -1,8 +1,29 @@
 import React from "react";
 import { Modal, Button } from "@mui/material";
 // import UserTable from  "./ListarUsuarios";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 function ModalEdicion(props) {
+  
+  const [Carreras, setCarreras] = useState([]);
+
+  const listarCarreras = async () => {
+    try {
+      const respuesta12 = await axios.get(
+        "http://localhost:3000/api/v1/carreras"
+      );
+      const nuevasCarreras = respuesta12.data.filter(
+        (carrera) => carrera.alta_baja === 1
+      ); 
+      setCarreras(nuevasCarreras);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    listarCarreras();
+  }, []);
   const {
     open,
     handleClose,
@@ -376,8 +397,8 @@ function ModalEdicion(props) {
             >
               Seleccione la Carrera
             </label>
-            <input
-              type="number"
+
+            <select
               id="id_carrera"
               name="id_carrera"
               value={editedUserDataAlumno.id_carrera}
@@ -393,7 +414,13 @@ function ModalEdicion(props) {
                 display:
                   editedUserData.id_tipo_usuario === 3 ? "block" : "none",
               }}
-            />
+            >
+              {Carreras.map((carrera) => (
+                <option key={carrera.id} value={carrera.id_carrera}>
+                  {carrera.nombre} {/* Ajusta esto según la estructura de tu carrera */}
+                </option>
+              ))}
+            </select>
           </div>
         </form>
         <div>

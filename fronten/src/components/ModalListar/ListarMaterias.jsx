@@ -36,14 +36,14 @@ function MateriasTable() {
   };
 
   const handleRadioChange = (e) => {
-    const newValue = e.target.value;
+    const newValue = parseInt(e.target.value, 10);
     setEditedMateriaData({
       ...editedMateriaData,
       id_tipo_materia: newValue,
     });
   };
   const handleRadioChange2 = (e) => {
-    const newValue = e.target.value;
+    const newValue = parseInt(e.target.value, 10);
     setEditedMateriaData({
       ...editedMateriaData,
       id_estado_materia: newValue,

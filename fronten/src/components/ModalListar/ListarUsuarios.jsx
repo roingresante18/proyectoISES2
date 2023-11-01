@@ -27,7 +27,6 @@ function UserTable() {
     fecha_inscripcion: "",
     id_carrera: "",
   });
-
   const [editedUserData, setEditedUserData] = useState({
     // Inicializa los campos con valores predeterminados
     id_usuario: "",

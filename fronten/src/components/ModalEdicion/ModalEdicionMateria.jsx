@@ -64,7 +64,7 @@ function ModalEdicionMaterias(props) {
               id="regular"
               name="id_tipo_materia"
               value="1"
-              checked={editedMateriaData.id_tipo_materia === "1"}
+              checked={editedMateriaData.id_tipo_materia === 1}
               onChange={(e) => handleRadioChange(e)}
               style={{
                 width: 20,
@@ -79,7 +79,7 @@ function ModalEdicionMaterias(props) {
               id="promocional"
               name="id_tipo_materia"
               value="2"
-              checked={editedMateriaData.id_tipo_materia === "2"}
+              checked={editedMateriaData.id_tipo_materia === 2}
               onChange={(e) => handleRadioChange(e)}
               style={{
                 width: 20,
@@ -97,7 +97,7 @@ function ModalEdicionMaterias(props) {
               id="activo"
               name="id_estado_materia"
               value="1"
-              checked={editedMateriaData.id_estado_materia === "1"}
+              checked={editedMateriaData.id_estado_materia === 1}
               onChange={(e) => handleRadioChange2(e)}
               style={{
                 width: 20,
@@ -112,7 +112,7 @@ function ModalEdicionMaterias(props) {
               id="inactivo"
               name="id_estado_materia"
               value="2"
-              checked={editedMateriaData.id_estado_materia === "2"}
+              checked={editedMateriaData.id_estado_materia === 2}
               onChange={(e) => handleRadioChange2(e)}
               style={{
                 width: 20,

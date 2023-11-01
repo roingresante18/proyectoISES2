@@ -27,10 +27,6 @@ const currencies2 = [
   { value: "1", label: "Activo" },
   { value: "2", label: "Inactivo" },
 ];
-// const currencies3 = [
-//   { value: "1", label: "carrera 1" },
-//   { value: "2", label: "carrera 2" },
-// ];
 
 function Registrar() {
   const [Carreras, setCarreras] = useState([]);
@@ -40,12 +36,14 @@ function Registrar() {
       const respuesta12 = await axios.get(
         "http://localhost:3000/api/v1/carreras"
       );
-      setCarreras(respuesta12.data);
+      const nuevasCarreras = respuesta12.data.filter(
+        (carrera) => carrera.alta_baja === 1
+      ); // Asumiendo que respuesta12.data es un array de carreras
+      setCarreras(nuevasCarreras);
     } catch (error) {
       console.log(error);
     }
   };
-
   useEffect(() => {
     listarCarreras();
   }, []);
@@ -630,11 +628,9 @@ function Registrar() {
               onChange={formik.handleChange}
               error={!!formik.errors.id_carrera}
             >
-              
               {Carreras.map((opcion) => (
-                <MenuItem key={opcion.id_carrera} value={opcion.id_carrera}>
+                <MenuItem key={opcion.id} value={opcion.id_carrera}>
                   {opcion.nombre}
-                  
                 </MenuItem>
               ))}
             </TextField>
