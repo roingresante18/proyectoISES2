@@ -13,7 +13,7 @@ function UserTable() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [editedUserData, setEditedUserData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_usuario: "",
+    // id_usuario: "",
     dni: "",
     nombre: "",
     apellido: "",
@@ -32,10 +32,49 @@ function UserTable() {
     listado();
   }, []);
 
+  const deleteSelectedUser = async () => {
+    if (selectedUser) {
+      try {
+        await axios.delete(`http://localhost:3000/api/v1/users/${selectedUser.id_usuario}`);
+        // Actualiza la lista de usuarios después de la eliminación
+        const updatedUsers = users.filter((user) => user.id_usuario !== selectedUser.id_usuario);
+        setUsers(updatedUsers);
+        setSelectedUser(null); // Desmarca la selección
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+  const updateSelectedUser = async () => {
+    if (selectedUser) {
+      try {
+        await axios.put(
+          `http://localhost:3000/api/v1/users/${selectedUser.id_usuario}`,
+          editedUserData
+        );
+        // Actualiza la lista de usuarios después de la edición
+        const updatedUsers = users.map((user) => {
+          if (user.id_usuario === selectedUser.id_usuario) {
+            return { ...user, ...editedUserData };
+          }
+          return user;
+        });
+        setUsers(updatedUsers);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleRowSelection = (user) => {
+    setSelectedUser(user);
+    setEditedUserData({ ...user }); // Inicializa los campos de edición con los datos del usuario seleccionado
+  };
+
   const columns = [
     { field: "id_usuario", headerName: "ID", width: 50 },
     { field: "dni", headerName: "DNI", width: 100 },
-    { field: "nombre", headerName: "Nombre", width: 100 },
+    { field: "nombre", headerName: "Nombre", width: 200 },
     { field: "apellido", headerName: "Apellido", width: 100 },
   ];
 
@@ -47,6 +86,7 @@ function UserTable() {
       <Container
         sx={{
           display: "flex  ",
+          flexDirection: "column",
           marginTop: "10px",
           justifyContent: "center",
           alignItems: "center",
@@ -61,7 +101,7 @@ function UserTable() {
       >
         <div
           style={{
-            height: 650,
+            height: 400,
             // width: "100%",
             display: "flex",
             flexDirection: "column",
@@ -101,10 +141,10 @@ function UserTable() {
                   (user) => user.id_usuario === selectedUserId
                 );
                 setSelectedUser(selectedUser);
-                setSelectUserDelete(selectedUser);
+               
               } else {
                 setSelectedUser(null);
-                setSelectUserDelete(null);
+               
                 console.log("dentro de elseif seleccionado");
               }
             }}
@@ -120,13 +160,52 @@ function UserTable() {
                       borderRadius: "4px",
                     }}
                   />
+
                 </>
               ),
             }}
-           
           />
         </div>
+        <div 
+        
+        >
+          {selectedUser && (
+            <>
+              <input
+                type="text"
+                placeholder="Nombre"
+                value={editedUserData.nombre}
+                onChange={(e) =>
+                  setEditedUserData({ ...editedUserData, nombre: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Apellido"
+                value={editedUserData.apellido}
+                onChange={(e) =>
+                  setEditedUserData({ ...editedUserData, apellido: e.target.value })
+                }
+              />
+              <input
+                type="text"
+                placeholder="DNI"
+                value={editedUserData.dni}
+                onChange={(e) =>
+                  setEditedUserData({ ...editedUserData, dni: e.target.value })
+                }
+              />
+              <Button onClick={updateSelectedUser} variant="outlined" color="primary">
+                Guardar cambios
+              </Button>
+            </>
+          )}
+        </div>
       </Container>
+      <Button onClick={deleteSelectedUser} variant="outlined" color="secondary">
+        Borrar usuario
+      </Button>
+      
     </>
   );
 }
