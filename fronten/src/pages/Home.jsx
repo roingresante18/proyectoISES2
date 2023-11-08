@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, MenuList } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Navegador from "./Navegador";
-import ModalEdicion from "./ModalEdicion";
-import ModalBorrarUsuario from "./ModalBorrarUsuario";
+import Navegador from "../components/Navegador";
+import ModalEdicion from "../components/ModalEdicion/ModalEdicion";
+import ModalBorrarUsuario from "../components/ModalBorrar/ModalBorrarUsuario";
 import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
 
 

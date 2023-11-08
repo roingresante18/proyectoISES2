@@ -4,48 +4,49 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, MenuList } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import Navegador from "./Navegador";
-// import ModalEdicion from "./ModalEdicion";
-
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import ModalEdicionMaterias from "./ModalEdicionMateria";
-import ModalBorrarMateria from "./ModalBorrarMateria";
-
-function MateriasTable() {
-  const [Materias, setMaterias] = useState([]);
+import Navegador from "../Navegador";
+import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
+import ModalEdicionCarrera from "../ModalEdicion/ModalEdicionCarrera"
+import Typography from "@mui/material/Typography";
+import ModalBorrarCarrera from "../ModalBorrar/ModalBorrarCarrera"
+ 
+function CarrerasTable() {
+  const [Carreras, setCarreras] = useState([]);
   const [selectedMateria, setSelectedMateria] = useState(null);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectMateriaDelete, setSelectMateriaDelete] = useState(null);
   const [isEditModa2Open, setIsEditModa2Open] = useState(false);
   const [editedMateriaData, setEditedMateriaData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_materia: "",
+    id_carrera: "",
     nombre: "",
-    id_tipo_materia: "",
-       
+    id_estado_carrera: "",
   });
-
+  const estadoCarreraMap = {
+    1: "Activo",
+    2: "Inactivo",
+  };
   const handleRadioChange = (e) => {
-    const newValue = e.target.value;
+    const newValue = parseInt(e.target.value, 10);
     setEditedMateriaData({
       ...editedMateriaData,
-      id_tipo_materia: newValue,
+      id_estado_carrera: newValue,
     });
   };
-  
 
   const [deleteMateriaData, setDeletedMateriaData] = useState({
     // Inicializa los campos con valores predeterminados
-    id_materia: "",
+    id_carrera: "",
     nombre: "",
-    id_tipo_materia: "",
-       
+    id_estado_carrera: "",
   });
   const listado = async () => {
     try {
-      const respuesta = await axios.get("http://localhost:3000/api/v1/materias");
+      const respuesta = await axios.get(
+        "http://localhost:3000/api/v1/carreras"
+      );
       console.log([respuesta]);
-      setMaterias(respuesta.data);
+      setCarreras(respuesta.data);
     } catch (error) {
       console.log(error);
     }
@@ -55,34 +56,38 @@ function MateriasTable() {
   }, []);
 
   const columns = [
-    { field: "id_materia", headerName: "ID", width: 50 },
+    { field: "id_carrera", headerName: "ID", width: 50 },
     { field: "nombre", headerName: "Nombre", width: 250 },
-    { field: "id_tipo_materia", headerName: "Tipo Materias", width: 100 },
+    { field: "id_estado_carrera", headerName: "Estado carrera", width: 150,
+    valueGetter: (params) => estadoCarreraMap[params.row.id_estado_carrera] || "",
+  },
   ];
 
   const handleEditModalClose = () => {
     setIsEditModalOpen(false);
-    setIsEditModa2Open(false)
+    setIsEditModa2Open(false);
   };
 
   const handleDelete = () => {
-    if (selectMateriaDelete){
-      console.log("if de borrar: "+selectMateriaDelete);
+    if (selectMateriaDelete) {
+      console.log("if de borrar: " + selectMateriaDelete);
       setDeletedMateriaData({
-        id_materia: selectMateriaDelete.id_materia,
-        alta_baja: 0
-      })
-      setIsEditModa2Open(true)
-    }}
- 
-  const handleEdit = () => { // Abre el modal de edición al hacer clic en el botón de "Editar"
+        id_carrera: selectMateriaDelete.id_carrera,
+        alta_baja: 0,
+      });
+      setIsEditModa2Open(true);
+    }
+  };
+
+  const handleEdit = () => {
+    // Abre el modal de edición al hacer clic en el botón de "Editar"
     if (selectedMateria) {
-      console.log("if de handleEdit: "+ selectedMateria); // Copia los datos de la fila seleccionada en el objeto de edición
+      console.log("if de handleEdit: " + selectedMateria); // Copia los datos de la fila seleccionada en el objeto de edición
       setEditedMateriaData({
-        id_materia: selectedMateria.id_materia,
+        id_carrera: selectedMateria.id_carrera,
         nombre: selectedMateria.nombre,
-        id_tipo_materia: selectedMateria.id_tipo_materia,
-        alta_baja: 1
+        id_estado_carrera: selectedMateria.id_estado_carrera,
+        alta_baja: 1,
       }); // Abre el modal de edición
       setIsEditModalOpen(true);
     }
@@ -92,21 +97,23 @@ function MateriasTable() {
     try {
       // Envía los cambios al backend para actualizar el usuario
       await axios.put(
-        `http://localhost:3000/api/v1/materias/${editedMateriaData.id_materia}`,
+        `http://localhost:3000/api/v1/carreras/${editedMateriaData.id_carrera}`,
         editedMateriaData
       );
 
       // Actualiza el estado local con los datos editados
-      const updatedMaterias = Materias.map((Materia) =>
-        Materia.id_materia === editedMateriaData.id_materia ? editedMateriaData : Materia
+      const updatedCarreras = Carreras.map((Materia) =>
+        Materia.id_carrera === editedMateriaData.id_carrera
+          ? editedMateriaData
+          : Materia
       );
-      setMaterias(updatedMaterias);
+      setCarreras(updatedCarreras);
 
       // Cierra el modal de edición
       setIsEditModalOpen(false);
       // setIsEditModa2Open(false);
     } catch (error) {
-      console.log("no se pudo ahcer la coneccion "+error);
+      console.log("no se pudo ahcer la coneccion " + error);
     }
   };
 
@@ -114,55 +121,63 @@ function MateriasTable() {
     try {
       // Envía los cambios al backend para actualizar el usuario
       const response = await axios.put(
-        `http://localhost:3000/api/v1/Materias/${deleteMateriaData.id_materia}`,
-        deleteMateriaData// Enviar solo el valor que deseas actualizar
+        `http://localhost:3000/api/v1/carreras/${deleteMateriaData.id_carrera}`,
+        deleteMateriaData // Enviar solo el valor que deseas actualizar
       );
-  
+
       if (response.status === 200) {
         // La solicitud PUT se realizó con éxito
         // Actualiza el estado local con el valor booleano actualizado
-        const updatedMaterias = Materias.map((Materia) => {
-          if (Materia.id_materia === deleteMateriaData.id_materia) {
+        const updatedCarreras = Carreras.map((Materia) => {
+          if (Materia.id_carrera === deleteMateriaData.id_carrera) {
             // Actualizar el valor booleano en el usuario actual
             return { ...Materia, alta_baja: 0 };
           }
           return Materia;
         });
-        setMaterias(updatedMaterias);
-  
+        setCarreras(updatedCarreras);
+
         // Cierra el modal de edición
         setIsEditModa2Open(false);
       } else {
-        console.log("Error al actualizar el usuario. Código de estado HTTP:", response.status);
+        console.log(
+          "Error al actualizar el usuario. Código de estado HTTP:",
+          response.status
+        );
       }
     } catch (error) {
       console.error("No se pudo hacer la conexión:", error);
     }
   };
 
-  
   const customLocaleText = {
-  toolbarExport: "Exportar",
-  toolbarColumns: "Columnas",
-  toolbarFilters: "Filtros",
-  toolbarDensity: "Vista",
-  toolbarDensityCompact: 'Compacto',
-  toolbarDensityStandard: 'Standard',
-  toolbarDensityComfortable: 'Confortable',
-  columnsPanelShowAllButton: 'Mostrar todo',
-  columnsPanelHideAllButton: 'Ocultar todo',
-  toolbarExportCSV: 'Exportar CSV',
-  toolbarExportPrint: 'Imprimir',
+    toolbarExport: "Exportar",
+    toolbarColumns: "Columnas",
+    toolbarFilters: "Filtros",
+    toolbarDensity: "Vista",
+    toolbarDensityCompact: "Compacto",
+    toolbarDensityStandard: "Standard",
+    toolbarDensityComfortable: "Confortable",
+    columnsPanelShowAllButton: "Mostrar todo",
+    columnsPanelHideAllButton: "Ocultar todo",
+    toolbarExportCSV: "Exportar CSV",
+    toolbarExportPrint: "Imprimir",
   };
-  
-  
+
   return (
     <>
       <Navegador />
+      <Typography
+      variant="h5"
+      color=""
+      component="div"
+      sx={{ mr: 2, borderBottom: 1 ,marginTop:10}}>
+        Listado de Carreras
+      </Typography>
       <Container
         sx={{
           display: "flex  ",
-          marginTop: "70px",
+          marginTop: "10px",
           justifyContent: "center",
           alignItems: "center",
           width: "100%",
@@ -185,35 +200,37 @@ function MateriasTable() {
           }}
         >
           <DataGrid
-            rows={Materias.filter((Materia) => Materia.alta_baja === 1)}
+            rows={Carreras.filter((Materia) => Materia.alta_baja === 1)}
             columns={[
               {
-                field: "radio",
+                field: "",
                 renderCell: (params) => (
                   <input
                     type="radio"
                     name="selectMateria"
-                    checked={params.row.id_materia === selectedMateria?.id_materia}
+                    checked={
+                      params.row.id_carrera === selectedMateria?.id_carrera
+                    }
                     onChange={() => handleRowSelection(params.row)}
                     style={{
-                      width:20,
-                      height:20,
+                      width: 20,
+                      height: 20,
                     }}
                   />
                 ),
               },
-              ...columns, 
+              ...columns,
             ]}
             pageSize={10}
             rowsPerPageOptions={[10, 25, 50]}
-            getRowId={(row) => row.id_materia}
+            getRowId={(row) => row.id_carrera}
             onRowSelectionModelChange={(newSelection) => {
               console.log("onSelectionModelChange executed:", newSelection);
               if (newSelection.length > 0) {
                 console.log("dentro de if seleccionado");
                 const selectedMateriaId = newSelection[0];
-                const selectedMateria = Materias.find(
-                  (Materia) => Materia.id_materia === selectedMateriaId
+                const selectedMateria = Carreras.find(
+                  (Materia) => Materia.id_carrera === selectedMateriaId
                 );
                 setSelectedMateria(selectedMateria);
                 setSelectMateriaDelete(selectedMateria);
@@ -252,7 +269,7 @@ function MateriasTable() {
             Editar
           </Button>
 
-          <ModalEdicionMaterias
+          <ModalEdicionCarrera
             open={isEditModalOpen}
             handleClose={() => setIsEditModalOpen(false)}
             editedMateriaData={editedMateriaData}
@@ -262,7 +279,7 @@ function MateriasTable() {
             setSelectedMateria={setSelectedMateria}
             setEditedMateriaData={setEditedMateriaData}
           />
-          {/* //modal de borrar usuario ********************************/}
+          {/* //modal de borrar carrera********************************/}
           <Button
             startIcon={<DeleteIcon />}
             variant="outlined"
@@ -273,7 +290,7 @@ function MateriasTable() {
             Borrar
           </Button>
 
-          <ModalBorrarMateria
+          <ModalBorrarCarrera
             open={isEditModa2Open}
             handleClose={() => setIsEditModa2Open(false)}
             handleSaveDelete={handleSaveDelete}
@@ -285,4 +302,4 @@ function MateriasTable() {
   );
 }
 
-export default MateriasTable 
+export default CarrerasTable;

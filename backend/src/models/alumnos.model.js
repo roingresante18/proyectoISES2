@@ -1,36 +1,37 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../database/database");
 
-const Materias = sequelize.define(
-  "materias",
+const Alumnos = sequelize.define(
+  "alumnos",
      {
-    id_materia:{
+    id_alumno:{
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
     },
-    nombre: {
+    legajo: {
         allowNull: false,
         type: DataTypes.STRING,
-        field:'nombre'
+        field:'legajo'
     },
-    id_tipo_materia: {
+    fecha_inscripcion: {
       allowNull: false,
-      type: DataTypes.INTEGER(11),
-      field: "id_tipo_materia",
-    },
-    id_estado_materia: {
+      type: DataTypes.DATE,
+      field:'fecha_inscripcion'
+  },
+    id_carrera: {
       allowNull: false,
-      type: DataTypes.INTEGER(11),
-      field: "id_estado_materia",
+      type: DataTypes.INTEGER,
+      field: "id_carrera",
     },
-    alta_baja: {
+    id_usuario: {
       allowNull: false,
-      type: DataTypes.INTEGER(11),
-      field: "alta_baja",
+      type: DataTypes.INTEGER,
+      field: "id_usuario",
+      // foreingkey: "id_usuario",
     },
-
+    
   },
   {
     timestamps: false, // para que se pueda conectar a la bd seteamos en false, lo correcto es que lo tenga activado
@@ -39,4 +40,4 @@ const Materias = sequelize.define(
 
 
 
-module.exports = Materias;
+module.exports = Alumnos;

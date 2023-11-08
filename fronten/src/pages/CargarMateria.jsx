@@ -10,12 +10,16 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuItem from '@mui/material/MenuItem';
 import { useState } from "react";
-import Navegador from "./Navegador";
+import Navegador from "../components/Navegador";
 import Modal from "@mui/material/Modal";
 
 const currencies = [
-  { value: '1', label: 'Cuatrimestral', },
-  { value: '2', label: 'Anual', },
+  { value: '1', label: 'Regular', },
+  { value: '2', label: 'Promocional', },
+];
+const currencies2 = [
+  { value: '1', label: 'Activo', },
+  { value: '2', label: 'Inactivo', },
 ];
 
 const CargarMaterias = () => {
@@ -24,6 +28,7 @@ const CargarMaterias = () => {
     initialValues: {
         nombre: "",
         id_tipo_materia:"",
+        id_estado_materia:"",
         alta_baja: "1",
      
     },
@@ -31,6 +36,7 @@ const CargarMaterias = () => {
     validationSchema: Yup.object({
       nombre: Yup.string().required("Debe ingresar un nombre"),
       id_tipo_materia: Yup.number().required("ingrese tipo materia"),
+      id_estado_materia: Yup.number().required("ingrese estado materia"),
       alta_baja: Yup.number(1).required("ingrese alt")
     }),
 
@@ -96,9 +102,22 @@ const CargarMaterias = () => {
           ))}
           </TextField>
 
-           {/* <Button variant="contained" type="submit" sx={{ width: 300, mt: 3 }}>
-              Enviar Formulario
-            </Button> */}
+          <TextField
+            type="number"
+            select
+            label="Estado Materia"
+            variant="outlined"
+            sx={{ width: 300, mt: 3 }}
+            name="id_estado_materia"
+            onChange={formik.handleChange}
+          >
+          {currencies2.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+          </TextField>
+
 
 <Button variant="contained" type="submit" sx={{ width: 300, mt: 3, mx:1 }} disabled={!formik.isValid}>
               Enviar Formulario

@@ -8,11 +8,11 @@ const User = sequelize.define(
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(11),    
     },
     clave: {
       allowNull: false,
-      type: DataTypes.INTEGER(11),
+      type: DataTypes.STRING(11),
       field: "clave",
     },
     dni: {
